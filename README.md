@@ -85,44 +85,6 @@ Standard streaming year-in-review features ignore local audio entirely. This pro
 
 ---
 
-## System Architecture
-
-```mermaid
-flowchart TD
-    subgraph Data Layer
-        A[Namida Backup ZIP] --> B[BackupExtractor]
-        B --> C[TrackResolver\nPrefix Stripping & Normalization]
-        C --> D[TelemetryStatsEngine\nSQLite & Epoch-day Logs]
-        D --> E[(output/data/wrapped_stats_2026.json)]
-    end
-
-    subgraph Curation Layer
-        E --> F[StudioService / CuratorWizard]
-        G[Local FLAC Tracks] -->|mutagen.flac| H[FLAC Tag & Cover Extractor]
-        H --> F
-        I[Spotify Inputs\nWorkday Hours & Favorites] --> F
-        T[Theme & Color Palette] --> F
-        F --> J[(output/data/user_curation_2026.json)]
-    end
-
-    subgraph Presentation & Web Studio
-        J --> K[StoryboardBuilder]
-        K --> L[output/storyboard/story.html\nHTML5 + CSS Aurora Mesh + JS Seek API]
-        F --> M[Web Studio Server\nFastAPI on http://127.0.0.1:8000]
-        M -->|Left Pane| N[Terminal Console UI]
-        M -->|Right Pane| O[Live Sync Story Player / MP4 Video Player]
-    end
-
-    subgraph Video Rendering Engine
-        L --> P[Puppeteer Headless Chrome\nwindow.seek(t)]
-        P -->|Raw Video Frames| Q[FFmpeg Stdin Pipe]
-        R[output/audio/soundtrack.aac] -->|Audio Loop & Fade| Q
-        Q --> S[output/renders/wrapped_2026.mp4\n1080x1920 @ 25 FPS]
-    end
-```
-
----
-
 ## The 10 Wrapped Slides
 
 Each slide runs for **5.0 seconds** (0.65s staggered entrance, 3.80s living dynamic motion, 0.55s smooth exit), totaling **50.0 seconds** (1,250 frames @ 25 FPS):
