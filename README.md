@@ -1,6 +1,16 @@
 # 2026 Wrapped: Cross-Platform Music Telemetry & Video Storyboard Pipeline
 
-A deterministic, frame-accurate web-to-video rendering pipeline and interactive curation studio that transforms offline Android music playback history ([Namida](https://github.com/namida-app)) and manual cross-platform streaming statistics (Spotify) into an animated, vertical (9:16, 1080x1920) **"2026 Wrapped"** video story.
+A deterministic, frame-accurate web-to-video rendering pipeline and interactive curation studio that transforms offline Android music playback history ([Namida](https://github.com/namidaco/namida)) and manual cross-platform streaming statistics (Spotify) into an animated, vertical (9:16, 1080x1920) **"2026 Wrapped"** video story.
+
+<div align="center">
+  <img src="img/web_studio_preview.png" alt="2026 Wrapped Live Curation Studio" width="100%" />
+</div>
+
+<p align="center">
+  <img src="img/story_slide1.png" width="48%" alt="Slide 1 - Your Year in Sound" />
+  &nbsp;
+  <img src="img/story_slide2.png" width="48%" alt="Slide 2 - The Big Numbers" />
+</p>
 
 ---
 
@@ -60,7 +70,7 @@ Standard streaming year-in-review features ignore local audio entirely. This pro
   - Switch between 5 rich palettes (**Spotify Aurora**, **Cyberpunk Neon**, **Sunset Solstice**, **Midnight Abyss**, **Acid Matrix**) or customize individual primary, secondary, and accent colors with live color pickers.
   - Changes instantly update CSS variables and recompile `story.html` without reloading the server.
 - **Punchy Editorial Typography**:
-  - High typographic hierarchy (108px slide titles, 96px–126px metric numbers, 30px–38px subtexts and badges).
+  - High typographic hierarchy (120px–124px hero titles, 110px–148px key metrics, 34px–48px labels and subtexts).
   - High-contrast letterforms readable from across the room and on mobile devices.
   - Clean, professional design: **100% free of emojis**.
 - **FLAC Vorbis Tag & Cover Art Autoloader**:
@@ -153,6 +163,10 @@ Customize the mood and visual identity of the entire video presentation directly
 NamidaWrapped/
 ├── Files/                                 # User backup archives & input media (git-ignored)
 │   └── .gitkeep
+├── img/                                   # High-resolution screenshots and visual previews
+│   ├── web_studio_preview.png             # Split-screen Web Studio dashboard preview
+│   ├── story_slide1.png                   # Slide 1 (Your Year in Sound) vertical capture
+│   └── story_slide2.png                   # Slide 2 (The Big Numbers) vertical capture
 ├── output/                                # Generated manifests, audio, storyboards, and MP4s
 │   ├── .gitkeep
 │   ├── artworks/                          # Extracted artist portraits and album artwork
