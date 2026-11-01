@@ -1,0 +1,315 @@
+{
+  "metadata": {
+    "year": 2026,
+    "generated_at": "2026-10-04T10:30:59.636924+00:00"
+  },
+  "headline_metrics": {
+    "total_listen_minutes": 32575,
+    "total_listen_hours": 542.9,
+    "itemized_duration_minutes": 35838,
+    "total_plays": 12425,
+    "unique_tracks": 2708,
+    "unique_titles": 1943,
+    "unique_artists": 1449,
+    "active_days": 221,
+    "listening_streak_days": 103,
+    "lossless_percentage": 100.0
+  },
+  "chronotype": {
+    "dominant_chronotype": "Afternoon Flow (12:00 - 18:00)",
+    "blocks": {
+      "Night Owl (23:00 - 05:00)": 317,
+      "Morning Energizer (05:00 - 12:00)": 3182,
+      "Afternoon Flow (12:00 - 18:00)": 6496,
+      "Evening Resonator (18:00 - 23:00)": 2430
+    },
+    "hourly_distribution": {
+      "12": 1154,
+      "11": 664,
+      "10": 365,
+      "13": 1303,
+      "0": 66,
+      "1": 61,
+      "21": 176,
+      "20": 325,
+      "17": 608,
+      "16": 521,
+      "14": 1273,
+      "19": 857,
+      "18": 983,
+      "15": 1637,
+      "9": 251,
+      "8": 298,
+      "7": 545,
+      "23": 80,
+      "6": 1024,
+      "22": 89,
+      "5": 35,
+      "4": 25,
+      "3": 30,
+      "2": 55
+    }
+  },
+  "peak_day": {
+    "date": "2026-09-24",
+    "listen_minutes": 483,
+    "total_plays": 149,
+    "most_played_track": "Formaldehyde - Mossback"
+  },
+  "top_tracks": [
+    {
+      "rank": 1,
+      "path": "/storage/emulated/0/Music/Favourite Folders/Rap/sorry im a haunted house - Savage Ga$p, KAMAARA.flac",
+      "filename": "sorry im a haunted house - Savage Ga$p, KAMAARA.flac",
+      "title": "sorry im a haunted house",
+      "artist": "Savage Ga$p, KAMAARA",
+      "album": "sorry im a haunted house",
+      "genre": "trap metal",
+      "plays": 69,
+      "duration_ms": 146984,
+      "total_listen_minutes": 169.0,
+      "is_lossless": true,
+      "format": "FLAC",
+      "artwork_path": "artworks/top_1_sorry im a haunted house - Savage Ga$p, KAMAARA.flac.png",
+      "palette": []
+    },
+    {
+      "rank": 2,
+      "path": "/storage/emulated/0/Music/Gym/WITCHCRAFT - AntXres, SCXR SOUL, Ethan Ross, Jupiluxe.flac",
+      "filename": "WITCHCRAFT - AntXres, SCXR SOUL, Ethan Ross, Jupiluxe.flac",
+      "title": "WITCHCRAFT",
+      "artist": "AntXres, SCXR SOUL, Ethan Ross, Jupiluxe",
+      "album": "WITCHCRAFT",
+      "genre": "drift phonk; phonk; witch house",
+      "plays": 68,
+      "duration_ms": 147485,
+      "total_listen_minutes": 167.1,
+      "is_lossless": true,
+      "format": "FLAC",
+      "artwork_path": "artworks/top_2_WITCHCRAFT - AntXres, SCXR SOUL, Ethan Ross, Jupiluxe.flac.png",
+      "palette": []
+    },
+    {
+      "rank": 3,
+      "path": "/storage/emulated/0/Music/Gym/FULL SEND RMX - BLXCKBUSTA, Ethan Ross.flac",
+      "filename": "FULL SEND RMX - BLXCKBUSTA, Ethan Ross.flac",
+      "title": "FULL SEND RMX",
+      "artist": "BLXCKBUSTA, Ethan Ross",
+      "album": "FULL SEND RMX",
+      "genre": "drift phonk; phonk",
+      "plays": 60,
+      "duration_ms": 119272,
+      "total_listen_minutes": 119.3,
+      "is_lossless": true,
+      "format": "FLAC",
+      "artwork_path": "artworks/top_3_FULL SEND RMX - BLXCKBUSTA, Ethan Ross.flac.png",
+      "palette": []
+    },
+    {
+      "rank": 4,
+      "path": "/storage/emulated/0/Music/Favourite Folders/Rap/BACKSTAGE - GOTOU寄生獣, vodvor.flac",
+      "filename": "BACKSTAGE - GOTOU寄生獣, vodvor.flac",
+      "title": "BACKSTAGE",
+      "artist": "GOTOU寄生獣, vodvor",
+      "album": "BACKSTAGE",
+      "genre": "rap/hip hop",
+      "plays": 60,
+      "duration_ms": 114638,
+      "total_listen_minutes": 114.6,
+      "is_lossless": true,
+      "format": "FLAC",
+      "artwork_path": "artworks/top_4_BACKSTAGE - GOTOU寄生獣, vodvor.flac.png",
+      "palette": []
+    },
+    {
+      "rank": 5,
+      "path": "/storage/emulated/0/Music/TOP/001 - I'll Come Runnin.flac",
+      "filename": "001 - I'll Come Runnin.flac",
+      "title": "I'll Come Runnin",
+      "artist": "ILLENIUM, Zeds Dead, Mako",
+      "album": "ODYSSEY",
+      "genre": "melodic bass; future bass; edm",
+      "plays": 57,
+      "duration_ms": 222089,
+      "total_listen_minutes": 211.0,
+      "is_lossless": true,
+      "format": "FLAC",
+      "artwork_path": "artworks/top_5_001 - I'll Come Runnin.flac.png",
+      "palette": []
+    },
+    {
+      "rank": 6,
+      "path": "/storage/emulated/0/Music/Favourite Folders/Alternative/CUT - Ethan Ross, VYPER 깨물다.flac",
+      "filename": "CUT - Ethan Ross, VYPER 깨물다.flac",
+      "title": "CUT",
+      "artist": "Ethan Ross, VYPER 깨물다",
+      "album": "CUT",
+      "genre": "phonk; trap metal",
+      "plays": 55,
+      "duration_ms": 105352,
+      "total_listen_minutes": 96.6,
+      "is_lossless": true,
+      "format": "FLAC",
+      "artwork_path": "artworks/top_6_CUT - Ethan Ross, VYPER 깨물다.flac.png",
+      "palette": []
+    },
+    {
+      "rank": 7,
+      "path": "/storage/emulated/0/Music/Gym/NO SLEEP - Downfvll, Y$57, PYRXCRIED.flac",
+      "filename": "NO SLEEP - Downfvll, Y$57, PYRXCRIED.flac",
+      "title": "NO SLEEP",
+      "artist": "Downfvll, Y$57, PYRXCRIED",
+      "album": "NO SLEEP",
+      "genre": "trap metal",
+      "plays": 54,
+      "duration_ms": 197142,
+      "total_listen_minutes": 177.4,
+      "is_lossless": true,
+      "format": "FLAC",
+      "artwork_path": "artworks/top_7_NO SLEEP - Downfvll, Y$57, PYRXCRIED.flac.png",
+      "palette": []
+    },
+    {
+      "rank": 8,
+      "path": "/storage/emulated/0/Music/Gym/ASCENSIONS - lamont4u, Whispersinyahead.flac",
+      "filename": "ASCENSIONS - lamont4u, Whispersinyahead.flac",
+      "title": "ASCENSIONS",
+      "artist": "lamont4u, Whispersinyahead",
+      "album": "ASCENSIONS",
+      "genre": "rap/hip hop",
+      "plays": 53,
+      "duration_ms": 127792,
+      "total_listen_minutes": 112.9,
+      "is_lossless": true,
+      "format": "FLAC",
+      "artwork_path": "artworks/top_8_ASCENSIONS - lamont4u, Whispersinyahead.flac.png",
+      "palette": []
+    },
+    {
+      "rank": 9,
+      "path": "/storage/emulated/0/Music/Gym/DROP IT - CLXUDA, Cutty Vibez.flac",
+      "filename": "DROP IT - CLXUDA, Cutty Vibez.flac",
+      "title": "DROP IT",
+      "artist": "CLXUDA, Cutty Vibez",
+      "album": "DROP IT",
+      "genre": "rap/hip hop",
+      "plays": 52,
+      "duration_ms": 135343,
+      "total_listen_minutes": 117.3,
+      "is_lossless": true,
+      "format": "FLAC",
+      "artwork_path": "artworks/top_9_DROP IT - CLXUDA, Cutty Vibez.flac.png",
+      "palette": []
+    },
+    {
+      "rank": 10,
+      "path": "/storage/emulated/0/Music/Gym/FREAK! - Ethan Ross, FXRR, xlout.flac",
+      "filename": "FREAK! - Ethan Ross, FXRR, xlout.flac",
+      "title": "FREAK!",
+      "artist": "Ethan Ross, FXRR, xlout",
+      "album": "FREAK!",
+      "genre": "phonk; trap metal",
+      "plays": 52,
+      "duration_ms": 112615,
+      "total_listen_minutes": 97.6,
+      "is_lossless": true,
+      "format": "FLAC",
+      "artwork_path": "artworks/top_10_FREAK! - Ethan Ross, FXRR, xlout.flac.png",
+      "palette": []
+    }
+  ],
+  "top_genres": [
+    {
+      "genre": "Alternative",
+      "plays": 1774,
+      "percentage": 14.3
+    },
+    {
+      "genre": "Rap/Hip Hop",
+      "plays": 1516,
+      "percentage": 12.2
+    },
+    {
+      "genre": "Phonk; Drift Phonk",
+      "plays": 948,
+      "percentage": 7.6
+    },
+    {
+      "genre": "Trap Metal",
+      "plays": 914,
+      "percentage": 7.4
+    },
+    {
+      "genre": "Electro",
+      "plays": 634,
+      "percentage": 5.1
+    },
+    {
+      "genre": "Melodic Bass; Future Bass; Edm",
+      "plays": 547,
+      "percentage": 4.4
+    },
+    {
+      "genre": "Rap",
+      "plays": 449,
+      "percentage": 3.6
+    },
+    {
+      "genre": "Dance",
+      "plays": 332,
+      "percentage": 2.7
+    },
+    {
+      "genre": "Melodic Bass; Future Bass; Edm; Chillstep",
+      "plays": 303,
+      "percentage": 2.4
+    },
+    {
+      "genre": "Phonk; Trap Metal",
+      "plays": 252,
+      "percentage": 2.0
+    }
+  ],
+  "top_artists": [
+    {
+      "artist": "GOTOU寄生獣, vodvor",
+      "plays": 510
+    },
+    {
+      "artist": "Daegho",
+      "plays": 193
+    },
+    {
+      "artist": "MUPP",
+      "plays": 152
+    },
+    {
+      "artist": "Savage Ga$p",
+      "plays": 149
+    },
+    {
+      "artist": "Kordhell, Scarlxrd",
+      "plays": 140
+    },
+    {
+      "artist": "Unknown Artist",
+      "plays": 130
+    },
+    {
+      "artist": "Pyrrhic",
+      "plays": 112
+    },
+    {
+      "artist": "CLXUDA, Cutty Vibez",
+      "plays": 96
+    },
+    {
+      "artist": "Kiraw",
+      "plays": 90
+    },
+    {
+      "artist": "Downfvll",
+      "plays": 85
+    }
+  ]
+}

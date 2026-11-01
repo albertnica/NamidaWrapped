@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 Wrapped • Live Curation Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2300ff87'/><polygon points='40,30 70,50 40,70' fill='%23050806'/></svg>">
+</head>
+<body>
+
+  <!-- Ambient glowing background aurora -->
+  <div class="ambient-bg">
+    <div class="bg-orb orb-green"></div>
+    <div class="bg-orb orb-purple"></div>
+    <div class="bg-orb orb-pink"></div>
+  </div>
+
+  <div class="studio-layout">
+
+    <!-- Top App Bar -->
+    <header class="studio-header">
+      <div class="brand">
+        <div class="brand-badge">• 2026 WRAPPED</div>
+        <div class="brand-title">Interactive Curation Studio</div>
+      </div>
+      <div class="header-actions">
+        <!-- Theme & Background Palette Selector -->
+        <div class="theme-picker-wrapper" id="theme-picker-wrapper">
+          <button class="btn-theme-selector" id="btn-theme-selector" onclick="toggleThemeDropdown(event)" title="Choose Ambient Video Palette">
+            <span class="theme-swatch-dot" id="theme-swatch-dot" style="background:#00ff87;"></span>
+            <span class="theme-name-label" id="theme-name-label">Spotify Aurora</span>
+            <span class="theme-caret">▼</span>
+          </button>
+          
+          <div class="theme-dropdown-menu hidden" id="theme-dropdown-menu">
+            <div class="theme-dropdown-header">
+              <span class="theme-title">🎨 Video Background Palette</span>
+              <span class="theme-subtitle">Select a color harmony or customize</span>
+            </div>
+            <div class="theme-presets-list">
+              <button type="button" class="theme-option-btn active" data-theme-id="aurora" onclick="applyThemePreset('aurora')">
+                <span class="theme-swatch" style="background: linear-gradient(135deg, #00ff87 0%, #7928ca 50%, #ff007a 100%);"></span>
+                <span class="theme-option-text">
+                  <b>Spotify Aurora</b>
+                  <small>Emerald • Royal Indigo • Pink</small>
+                </span>
+              </button>
+              <button type="button" class="theme-option-btn" data-theme-id="cyberpunk" onclick="applyThemePreset('cyberpunk')">
+                <span class="theme-swatch" style="background: linear-gradient(135deg, #a855f7 0%, #ff007a 50%, #00f5ff 100%);"></span>
+                <span class="theme-option-text">
+                  <b>Cyberpunk Neon</b>
+                  <small>Electric Purple • Magenta • Cyan</small>
+                </span>
+              </button>
+              <button type="button" class="theme-option-btn" data-theme-id="sunset" onclick="applyThemePreset('sunset')">
+                <span class="theme-swatch" style="background: linear-gradient(135deg, #ff7a00 0%, #ff0055 50%, #ffb800 100%);"></span>
+                <span class="theme-option-text">
+                  <b>Sunset Solstice</b>
+                  <small>Solar Amber • Coral • Gold</small>
+                </span>
+              </button>
+              <button type="button" class="theme-option-btn" data-theme-id="midnight" onclick="applyThemePreset('midnight')">
+                <span class="theme-swatch" style="background: linear-gradient(135deg, #00d4ff 0%, #6366f1 50%, #8b5cf6 100%);"></span>
+                <span class="theme-option-text">
+                  <b>Midnight Abyss</b>
+                  <small>Ice Cyan • Deep Indigo • Amethyst</small>
+                </span>
+              </button>
+              <button type="button" class="theme-option-btn" data-theme-id="acid" onclick="applyThemePreset('acid')">
+                <span class="theme-swatch" style="background: linear-gradient(135deg, #a3e635 0%, #10b981 50%, #eab308 100%);"></span>
+                <span class="theme-option-text">
+                  <b>Acid Matrix</b>
+                  <small>Acid Lime • Emerald • Obsidian</small>
+                </span>
+              </button>
+            </div>
+            
+            <div class="theme-custom-box">
+              <div class="theme-custom-header">
+                <span>Custom Glow Pickers</span>
+                <button type="button" class="btn-micro-reset" onclick="applyThemePreset('aurora')">Reset</button>
+              </div>
+              <div class="theme-pickers-row">
+                <label class="custom-color-item" title="Primary Glow & Accent Highlights">
+                  <span>Primary</span>
+                  <input type="color" id="theme-inp-primary" value="#00ff87" onchange="onCustomColorInputChange()">
+                </label>
+                <label class="custom-color-item" title="Secondary Glow (Mid Background)">
+                  <span>Secondary</span>
+                  <input type="color" id="theme-inp-secondary" value="#7928ca" onchange="onCustomColorInputChange()">
+                </label>
+                <label class="custom-color-item" title="Accent Glow (Base Highlight)">
+                  <span>Accent</span>
+                  <input type="color" id="theme-inp-accent" value="#ff007a" onchange="onCustomColorInputChange()">
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-indicator" id="top-step-indicator">Step 1 of 10: Your Year in Sound</div>
+        <button class="btn-pill" id="btn-export-full" onclick="renderFullVideo()">Render Full 50.0s MP4</button>
+        <button class="btn-pill btn-shutdown" id="btn-shutdown-studio" onclick="shutdownStudioServer()" title="Save changes and shut down the background Studio server">⏻ Stop Studio</button>
+      </div>
+    </header>
+
+    <!-- Main Split-Screen Workspace -->
+    <main class="studio-workspace">
+
+      <!-- LEFT: Interactive Terminal Console -->
+      <section class="pane pane-terminal">
+        <div class="terminal-window">
+          
+          <div class="terminal-bar">
+            <div class="traffic-lights">
+              <span class="tl-dot red"></span>
+              <span class="tl-dot yellow"></span>
+              <span class="tl-dot green"></span>
+            </div>
+            <div class="terminal-title">wrapped@curator-cli: ~/panel-<span id="lbl-panel-idx">1</span></div>
+            <div class="terminal-mode">ACTIVE SESSION</div>
+          </div>
+
+          <!-- Tabs for all 10 panels -->
+          <nav class="panel-tabs" id="panel-tabs">
+            <button class="tab-btn active" data-id="0">1. Sound</button>
+            <button class="tab-btn" data-id="1">2. Big Numbers</button>
+            <button class="tab-btn" data-id="2">3. Clock</button>
+            <button class="tab-btn" data-id="3">4. Songs</button>
+            <button class="tab-btn" data-id="4">5. Albums</button>
+            <button class="tab-btn" data-id="5">6. Artists</button>
+            <button class="tab-btn" data-id="6">7. Discoveries</button>
+            <button class="tab-btn" data-id="7">8. Genres</button>
+            <button class="tab-btn" data-id="8">9. Listened Songs</button>
+            <button class="tab-btn" data-id="9">10. Listened Artists</button>
+          </nav>
+
+          <!-- Terminal Output & Interactive Prompt Form -->
+          <div class="terminal-body" id="terminal-body">
+            <div class="terminal-intro">
+              <span class="t-green">✦ Welcome to 2026 Wrapped Hybrid Curation Engine.</span><br>
+              <span class="t-dim">Combine automated Namida telemetry with your Spotify minutes and curated favorites.</span><br>
+              <span class="t-dim">Each panel updates the live preview instantly on the right.</span>
+            </div>
+
+            <!-- Dynamic Form Injected Here -->
+            <div id="panel-form-container"></div>
+            
+            <!-- Terminal Toast Alert -->
+            <div class="terminal-toast hidden" id="terminal-toast"></div>
+          </div>
+
+          <!-- Terminal Command Action Bar -->
+          <div class="terminal-footer">
+            <button class="btn-term accent" id="btn-save-render-slice" onclick="saveAndRenderSlice()">🎬 Save & Render Slice</button>
+            <button class="btn-term primary" id="btn-save-next-slice" onclick="saveAndNextSlice()">Save & Next Slice →</button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- RIGHT: Studio Device Preview Player -->
+      <section class="pane pane-preview">
+        <div class="device-showcase">
+          
+          <div class="preview-mode-bar">
+            <div class="mode-toggle">
+              <button class="mode-btn active" id="btn-mode-live" onclick="setPreviewMode('live')">Live Story</button>
+              <button class="mode-btn" id="btn-mode-video" onclick="setPreviewMode('video')">Rendered MP4</button>
+            </div>
+            <div class="preview-zoom-control" title="Preview Mockup Scale">
+              <span class="zoom-label">📱 Size</span>
+              <button class="zoom-btn" id="btn-zoom-360" onclick="setPhonePreviewScale('standard')">360</button>
+              <button class="zoom-btn active" id="btn-zoom-420" onclick="setPhonePreviewScale('medium')">420</button>
+              <button class="zoom-btn" id="btn-zoom-480" onclick="setPhonePreviewScale('large')">480</button>
+              <a href="/story" target="_blank" class="btn-popout-story" title="Open Full 1080x1920 Storyboard in New Window">↗ Full</a>
+            </div>
+            <div class="preview-fps-control" title="Global Preview Framerate (applies to all Previews)">
+              <span class="fps-label">⚡ FPS</span>
+              <select class="fps-select" id="sel-preview-fps" onchange="onPreviewFpsSelectChange(this.value)">
+                <option value="1">1 (Fast)</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="25">25 (Full)</option>
+              </select>
+              <input type="number" class="fps-num-input" id="inp-preview-fps" min="1" max="60" step="1" value="1"
+                     onchange="onPreviewFpsInputChange(this.value)" title="Set custom Preview FPS (1–60)">
+            </div>
+            <div class="preview-meta">
+              <span class="live-tag" id="lbl-scope-tag">• <b>5.0s</b></span>
+            </div>
+          </div>
+
+          <!-- Smartphone 9:16 Mockup Frame -->
+          <div class="mobile-frame">
+            <div class="frame-notch"></div>
+            
+            <!-- Live HTML5 Iframe Player -->
+            <div class="player-wrapper" id="live-player-container">
+              <iframe id="story-iframe" src="/story" frameborder="0"></iframe>
+            </div>
+
+            <!-- Rendered MP4 Video Player -->
+            <div class="player-wrapper hidden" id="video-player-container">
+              <video id="slice-video" controls loop playsinline>
+                <source id="slice-video-src" src="" type="video/mp4">
+              </video>
+            </div>
+
+          </div>
+
+          <!-- Playback Scrubber & Controls -->
+          <div class="player-controls">
+            <button class="ctrl-btn" id="btn-restart" title="Restart / Loop Start" onclick="restartPlayback()">↺</button>
+            <button class="ctrl-btn main-play-btn" id="btn-play-pause" title="Play / Pause" onclick="togglePlayPause()">❚❚ Pause</button>
+            <button class="ctrl-btn audio-toggle-btn active" id="btn-preview-audio" title="Mute / Unmute real-time preview audio" onclick="togglePreviewAudioMute()">🔊 Audio</button>
+            <input type="range" class="timeline-slider" id="timeline-slider" min="0" max="5.0" step="0.05" value="0">
+            <span class="time-display" id="time-display">0.0s / 5.0s</span>
+          </div>
+
+          <!-- Export & Custom Video Composer Drawer -->
+          <div class="export-suite-card">
+            <div class="export-suite-header">
+              <div class="export-title">🎬 Video Export & Custom Slices Composer</div>
+              <button class="btn-mini-toggle" id="btn-toggle-composer" onclick="toggleComposerDrawer()">Custom Slices & Order ▼</button>
+            </div>
+
+            <!-- Save to Custom Path with Windows File Explorer -->
+            <div class="save-video-container">
+              <input type="text" class="export-path-input" id="inp-export-path" 
+                     placeholder="Destination path (e.g. C:\Users\alfa\Desktop\Wrapped_2026.mp4)...">
+              <button class="btn-term secondary" id="btn-browse-explorer" onclick="browseSavePath()" title="Open Windows File Explorer">📁 Browse...</button>
+              <button class="btn-term primary-save" id="btn-save-video-path" onclick="saveVideoToPath()">💾 Save Video</button>
+            </div>
+
+            <!-- Custom Slices Reordering & Selection Drawer (Collapsible) -->
+            <div class="composer-drawer" id="composer-drawer">
+              <div class="composer-intro">
+                <span>Select which slices to include and reorder them. Click render to build your custom video in real time:</span>
+              </div>
+              <div class="slices-order-list" id="slices-order-list">
+                <!-- Injected via JavaScript -->
+              </div>
+              <div class="composer-actions">
+                <div class="composer-summary" id="composer-summary">Selected: 10 slices (50.0s)</div>
+                <div style="display:flex;gap:8px;">
+                  <button class="btn-term secondary" onclick="resetSlicesOrder()">↺ Reset Order</button>
+                  <button class="btn-term accent-glow" onclick="renderCustomSequence()">🚀 Render Custom Video Now</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Full-Page Blocking Glassmorphism Render Status Modal -->
+  <div class="render-overlay hidden" id="render-overlay" role="alertdialog" aria-modal="true" aria-live="assertive">
+    <div class="render-card">
+      <div class="render-spinner-container">
+        <div class="render-spinner-glow"></div>
+        <div class="spinner"></div>
+      </div>
+      <div class="render-badge">
+        <span class="render-pulse-dot"></span>
+        <span id="render-badge-text">RENDERING VIDEO</span>
+      </div>
+      <h3 class="render-title" id="render-status-title">Rendering Video</h3>
+      <p class="render-subtitle" id="render-status-subtitle">Processing frames with Chromium &amp; FFmpeg</p>
+      <div class="render-dest-pill hidden" id="render-dest-container">
+        <span class="dest-icon">📁</span>
+        <div class="dest-meta">
+          <span class="dest-label">Target Destination</span>
+          <span class="dest-path" id="render-status-path"></span>
+        </div>
+      </div>
+      <div class="render-progress-bar-wrapper">
+        <div class="render-progress-bar-fill"></div>
+      </div>
+      <div class="render-lock-notice">🔒 STUDIO LOCKED WHILE RENDERING • PLEASE WAIT</div>
+      <div id="render-status-msg" style="display: none !important;"></div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

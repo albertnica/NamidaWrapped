@@ -1,0 +1,90 @@
+# ==============================================================================
+# 2026 Wrapped Pipeline - Git Ignore Configuration
+# ==============================================================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# --- Virtual Environments ---
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# --- Node.js & Dependencies ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# --- User Archives & Heavy Media Inputs (Private User Data) ---
+files/*.zip
+files/*.mp4
+files/*.flac
+files/*.m4a
+files/*.mp3
+!files/.gitkeep
+
+# --- Intermediate Extraction & Scraping Caches ---
+extracted/
+temp_tracks.db
+anim_test/
+video_verify_frames/
+ref_frames/
+test_render.png
+*.log
+
+# --- Video Engine Outputs, Storyboards & Local Curation Data ---
+output/renders/
+output/slices/
+output/previews/
+output/storyboard/
+output/artworks/
+output/logs/
+output/audio/temp_audio/
+output/data/user_curation_*.json
+output/data/panel_configs/
+!output/.gitkeep
+!output/audio/soundtrack.aac
+!output/data/wrapped_stats_*.json
+
+# --- IDE & Operating System Artifacts ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# --- Secrets & Environment Variables ---
+.env
+.env.local
+.env.*.local
+*.secret

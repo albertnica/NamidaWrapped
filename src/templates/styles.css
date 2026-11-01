@@ -1,0 +1,1157 @@
+/* ========================================================
+   2026 Wrapped Design System & Full-Bleed Storyboard Styles
+   Resolution: 1080x1920 (9:16 Vertical Story)
+   Vibrant Spotify Wrapped Aurora Aesthetic & Editorial Typography
+   ======================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  width: 1080px;
+  height: 1920px;
+  overflow: hidden;
+  background-color: #050806;
+  font-family: 'Outfit', sans-serif;
+  color: #ffffff;
+  position: relative;
+  user-select: none;
+}
+
+/* Full-bleed ambient backdrop with vibrant animated glowing aurora gradient orbs */
+.ambient-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1080px;
+  height: 1920px;
+  overflow: hidden;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 35%, var(--theme-bg-mid, #0c2616) 0%, var(--theme-bg-outer, #07140b) 50%, var(--theme-bg-base, #030604) 100%);
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(130px);
+}
+
+/* Primary Neon Ambient Orb */
+.orb-1 {
+  width: 1300px;
+  height: 1300px;
+  background: radial-gradient(circle, var(--theme-primary, #00ff87) 0%, rgba(30, 215, 96, 0.40) 45%, rgba(0, 0, 0, 0) 75%);
+  top: -240px;
+  right: -260px;
+  opacity: 0.85;
+}
+
+/* Secondary Royal Indigo / Violet Orb */
+.orb-2 {
+  width: 1350px;
+  height: 1350px;
+  background: radial-gradient(circle, var(--theme-secondary, #7928ca) 0%, rgba(153, 51, 255, 0.40) 50%, rgba(0, 0, 0, 0) 75%);
+  top: 25%;
+  left: -320px;
+  opacity: 0.80;
+}
+
+/* Vivid Hot Pink / Accent Orb */
+.orb-3 {
+  width: 1200px;
+  height: 1200px;
+  background: radial-gradient(circle, var(--theme-accent, #ff007a) 0%, rgba(255, 64, 129, 0.40) 50%, rgba(0, 0, 0, 0) 75%);
+  bottom: -160px;
+  right: -200px;
+  opacity: 0.75;
+}
+
+/* Tertiary Glow / Mid-Center Orb */
+.orb-4 {
+  width: 1100px;
+  height: 1100px;
+  background: radial-gradient(circle, var(--theme-tertiary, #00d4ff) 0%, var(--theme-primary, #00ff87) 50%, rgba(0, 0, 0, 0) 75%);
+  top: 52%;
+  left: 20%;
+  opacity: 0.65;
+}
+
+/* Story Progress Segment Bars (10 segments for 10 slides) */
+.story-bars {
+  position: absolute;
+  top: 38px;
+  left: 55px;
+  right: 55px;
+  display: flex;
+  gap: 8px;
+  z-index: 100;
+}
+
+.story-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.story-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 4px;
+}
+
+/* Top Header Branding */
+.story-header {
+  position: absolute;
+  top: 62px;
+  left: 55px;
+  right: 55px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+.brand-tag {
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-badge {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  padding: 10px 28px;
+  border-radius: 28px;
+  font-size: 34px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 2px;
+  backdrop-filter: blur(20px);
+}
+
+/* Universal Bottom Footer Navigation */
+.story-footer {
+  position: absolute;
+  bottom: 35px;
+  left: 55px;
+  right: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.footer-dots {
+  display: flex;
+  gap: 12px;
+}
+
+.f-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.25);
+  transition: all 0.3s ease;
+}
+
+.f-dot.active {
+  width: 50px;
+  background: var(--theme-primary, #00ff87);
+}
+
+/* Full Bleed Content Viewport */
+.content-viewport {
+  position: absolute;
+  top: 165px;
+  left: 55px;
+  right: 55px;
+  bottom: 110px;
+  z-index: 10;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  flex-direction: column;
+}
+
+.slide.active {
+  display: flex;
+}
+
+/* Bold Editorial Typography System */
+.title-group {
+  flex-shrink: 0;
+  margin-bottom: 22px;
+}
+
+.eyebrow {
+  font-size: 42px;
+  font-weight: 900;
+  color: var(--theme-primary, #00ff87);
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  margin-bottom: 8px;
+}
+
+.hero-title {
+  font-size: 124px;
+  font-weight: 900;
+  letter-spacing: -4px;
+  line-height: 0.94;
+  color: #ffffff;
+}
+
+/* ========================================================
+   SLIDE 1: YOUR YEAR IN SOUND (WAVE + 4 BENTO CARDS)
+   ======================================================== */
+.slide-1-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+}
+
+.wave-card {
+  height: 370px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.24);
+  border-radius: 40px;
+  padding: 26px 36px 18px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backdrop-filter: blur(35px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.6);
+  flex-shrink: 0;
+}
+
+.wave-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wave-card-tag {
+  font-size: 36px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--theme-primary, #00ff87);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pulse-indicator {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--theme-primary, #00ff87);
+  box-shadow: 0 0 16px var(--theme-primary, #00ff87);
+}
+
+.wave-card-peak {
+  background: rgba(255, 255, 255, 0.16);
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  padding: 10px 26px;
+  border-radius: 26px;
+  font-size: 36px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.wave-svg-box {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+  margin-top: 4px;
+}
+
+.wave-card-bottom-note {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 4px;
+  letter-spacing: 0.5px;
+}
+
+.bento-grid-2x2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  flex: 1;
+}
+
+.bento-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  border-radius: 40px;
+  padding: 34px 34px 26px 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backdrop-filter: blur(30px);
+  position: relative;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+}
+
+.bento-card.highlight-green {
+  background: linear-gradient(145deg, rgba(0, 255, 135, 0.18) 0%, rgba(255, 255, 255, 0.04) 100%);
+  border-color: var(--theme-primary, #00ff87);
+}
+
+.bento-card.highlight-gold {
+  background: linear-gradient(145deg, rgba(255, 184, 0, 0.18) 0%, rgba(255, 255, 255, 0.04) 100%);
+  border-color: rgba(255, 184, 0, 0.45);
+}
+
+.bento-card.highlight-cyan {
+  background: linear-gradient(145deg, rgba(0, 212, 255, 0.18) 0%, rgba(255, 255, 255, 0.04) 100%);
+  border-color: var(--theme-tertiary, #00d4ff);
+}
+
+.bento-card.highlight-purple {
+  background: linear-gradient(145deg, rgba(168, 85, 247, 0.18) 0%, rgba(255, 255, 255, 0.04) 100%);
+  border-color: var(--theme-secondary, #7928ca);
+}
+
+.bento-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bento-card-pill {
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pill-sym {
+  font-size: 26px;
+}
+
+.bento-card.highlight-green .bento-card-pill {
+  color: var(--theme-primary, #00ff87);
+}
+
+.bento-card.highlight-gold .bento-card-pill {
+  color: #ffb800;
+}
+
+.bento-card.highlight-cyan .bento-card-pill {
+  color: var(--theme-tertiary, #00d4ff);
+}
+
+.bento-card.highlight-purple .bento-card-pill {
+  color: var(--theme-secondary, #a855f7);
+}
+
+.bento-value {
+  font-size: 110px;
+  font-weight: 900;
+  letter-spacing: -3px;
+  line-height: 0.95;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.bento-label {
+  font-size: 44px;
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+
+.bento-subtext {
+  font-size: 34px;
+  font-weight: 700;
+  color: #d0e4d2;
+}
+
+.bento-micro-meter {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 24px;
+  margin-top: 14px;
+}
+
+.bento-micro-bar {
+  flex: 1;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.bento-micro-bar.fill {
+  background: var(--theme-primary, #00ff87);
+}
+
+/* ========================================================
+   SLIDE 2: THE BIG NUMBERS (NO 100% FLAC, STRONG RATIOS)
+   ======================================================== */
+.slide-2-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.trio-hero-card {
+  height: 480px;
+  background: linear-gradient(145deg, rgba(0, 255, 135, 0.22) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1.5px solid rgba(0, 255, 135, 0.42);
+  border-radius: 44px;
+  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backdrop-filter: blur(35px);
+  position: relative;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.65);
+  flex-shrink: 0;
+}
+
+.trio-hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trio-hero-number {
+  font-size: 148px;
+  font-weight: 900;
+  letter-spacing: -4.5px;
+  line-height: 0.95;
+  color: #ffffff;
+  margin: 16px 0 10px 0;
+}
+
+.trio-hero-label {
+  font-size: 48px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.trio-eq-stream {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 80px;
+  width: 100%;
+}
+
+.trio-eq-bar {
+  flex: 1;
+  border-radius: 6px;
+  background: linear-gradient(to top, rgba(0, 255, 135, 0.35) 0%, #00ff87 100%);
+  height: 22px;
+}
+
+.trio-twin-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  height: 480px;
+  flex-shrink: 0;
+}
+
+.twin-card {
+  background: rgba(255, 255, 255, 0.055);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  border-radius: 40px;
+  padding: 38px 36px 32px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backdrop-filter: blur(30px);
+}
+
+.twin-num {
+  font-size: 104px;
+  font-weight: 900;
+  letter-spacing: -2.5px;
+  line-height: 0.98;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.twin-label {
+  font-size: 44px;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.twin-sub {
+  font-size: 34px;
+  font-weight: 700;
+  color: #d0e4d2;
+  margin-top: 4px;
+}
+
+.rhythm-banner-card {
+  height: 150px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  border-radius: 36px;
+  padding: 0 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(30px);
+  flex-shrink: 0;
+}
+
+.rhythm-val {
+  font-size: 50px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -1px;
+  white-space: nowrap;
+}
+
+.rhythm-lbl {
+  font-size: 34px;
+  font-weight: 700;
+  color: #d0e4d2;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+
+/* ========================================================
+   SLIDE 3: LISTENING CLOCK (WORKING HOURS & SATURDAY PEAK)
+   ======================================================== */
+.slide-3-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+}
+
+.clock-stage-box {
+  height: 680px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.clock-relative-canvas {
+  position: relative;
+  width: 680px;
+  height: 680px;
+}
+
+.clock-svg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.clock-center-disc {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1a271d 0%, #0d140e 100%);
+  border: 2px solid var(--theme-primary, rgba(0, 255, 135, 0.45));
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 45px var(--theme-primary, rgba(0, 255, 135, 0.30));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  text-align: center;
+}
+
+.clock-center-time {
+  font-size: 96px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -2px;
+  color: #ffffff;
+}
+
+.clock-center-sub {
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: var(--theme-primary, #00ff87);
+  margin: 8px 0;
+  text-transform: uppercase;
+}
+
+.clock-center-plays {
+  font-size: 42px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.chronotype-bridge-card {
+  height: 110px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  border-radius: 28px;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(30px);
+  flex-shrink: 0;
+}
+
+.chrono-tag {
+  font-size: 36px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--theme-primary, #00ff87);
+  text-transform: uppercase;
+}
+
+.chrono-detail {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.week-equalizer-card {
+  height: 360px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  border-radius: 40px;
+  padding: 30px 38px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backdrop-filter: blur(30px);
+  flex-shrink: 0;
+}
+
+.week-eq-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.week-eq-title {
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.week-eq-badge {
+  background: rgba(0, 255, 135, 0.22);
+  border: 1.5px solid var(--theme-primary, rgba(0, 255, 135, 0.55));
+  color: var(--theme-primary, #00ff87);
+  padding: 6px 22px;
+  border-radius: 22px;
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.week-eq-bars {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 240px;
+  padding-bottom: 8px;
+}
+
+.eq-day-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+}
+
+.eq-bar-wrap {
+  height: 250px;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+}
+
+.eq-bar {
+  width: 64px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.eq-bar.peak {
+  background: linear-gradient(to top, #0f632c 0%, var(--theme-primary, #00ff87) 100%);
+}
+
+.eq-day-name {
+  font-size: 36px;
+  font-weight: 800;
+  color: #a4bba6;
+}
+
+.eq-day-name.peak {
+  color: #ffffff;
+  font-weight: 900;
+}
+
+/* ========================================================
+   SLIDE 4: TOP SONGS (CURATED 5 SONGS - NO PLAYS/MINS)
+   ======================================================== */
+.slide-4-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+}
+
+.hero-spotlight-card {
+  height: 480px;
+  background: linear-gradient(135deg, rgba(0, 255, 135, 0.24) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1.5px solid var(--theme-primary, rgba(0, 255, 135, 0.42));
+  border-radius: 44px;
+  padding: 36px 42px;
+  display: flex;
+  gap: 36px;
+  align-items: center;
+  backdrop-filter: blur(35px);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.hero-vinyl-wrapper {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  flex-shrink: 0;
+}
+
+.hero-cover-art {
+  position: absolute;
+  width: 285px;
+  height: 285px;
+  border-radius: 36px;
+  object-fit: cover;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 35px var(--theme-primary, rgba(0, 255, 135, 0.35));
+  z-index: 2;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+}
+
+.hero-vinyl-disc {
+  position: absolute;
+  right: 0;
+  top: 18px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #2a2a2a 0%, #111111 70%, #050505 100%);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-vinyl-center {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background: var(--theme-primary, #00ff87);
+  border: 6px solid #111;
+}
+
+.hero-track-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-track-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--theme-primary, #00ff87);
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  margin-bottom: 12px;
+}
+
+.hero-track-name {
+  font-size: 72px;
+  font-weight: 900;
+  line-height: 1.05;
+  color: #ffffff;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.hero-track-artist {
+  font-size: 48px;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sub-tracks-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sub-track-card {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 34px;
+  padding: 0 34px;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  backdrop-filter: blur(30px);
+}
+
+.sub-track-rank {
+  font-size: 60px;
+  font-weight: 900;
+  color: #a4bba6;
+  width: 52px;
+  text-align: center;
+}
+
+.sub-track-cover {
+  width: 124px;
+  height: 124px;
+  border-radius: 24px;
+  object-fit: cover;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sub-track-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.sub-track-name {
+  font-size: 48px;
+  font-weight: 900;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #ffffff;
+}
+
+.sub-track-by {
+  font-size: 38px;
+  font-weight: 700;
+  color: #d0e4d2;
+  margin-top: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-metric-pill {
+  padding: 12px 24px;
+  background: rgba(0, 255, 135, 0.15);
+  border: 1.5px solid var(--theme-primary, rgba(0, 255, 135, 0.50));
+  border-radius: 999px;
+  font-size: 38px;
+  font-weight: 800;
+  color: var(--theme-primary, #00ff87);
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(0, 255, 135, 0.20);
+}
+
+.artist-metric-pill {
+  padding: 12px 24px;
+  background: rgba(121, 40, 202, 0.25);
+  border: 1.5px solid var(--theme-secondary, rgba(153, 51, 255, 0.60));
+  border-radius: 999px;
+  font-size: 38px;
+  font-weight: 800;
+  color: #d8b4fe;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(121, 40, 202, 0.25);
+}
+
+/* ========================================================
+   SLIDE 5: TOP ALBUMS
+   ======================================================== */
+.slide-5-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+}
+
+.hero-album-card {
+  height: 480px;
+  background: linear-gradient(135deg, rgba(121, 40, 202, 0.28) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1.5px solid var(--theme-secondary, rgba(121, 40, 202, 0.48));
+  border-radius: 44px;
+  padding: 36px 42px;
+  display: flex;
+  gap: 36px;
+  align-items: center;
+  backdrop-filter: blur(35px);
+  flex-shrink: 0;
+}
+
+.hero-album-pill {
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  color: #c78bf6;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* ========================================================
+   SLIDE 6: TOP ARTISTS
+   ======================================================== */
+.slide-6-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+}
+
+.hero-artist-card {
+  height: 480px;
+  background: linear-gradient(135deg, rgba(0, 255, 135, 0.24) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1.5px solid var(--theme-primary, rgba(0, 255, 135, 0.42));
+  border-radius: 44px;
+  padding: 36px 44px;
+  display: flex;
+  gap: 38px;
+  align-items: center;
+  backdrop-filter: blur(35px);
+  flex-shrink: 0;
+}
+
+.hero-artist-avatar {
+  width: 270px;
+  height: 270px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid var(--theme-primary, #00ff87);
+  box-shadow: 0 0 40px rgba(0, 255, 135, 0.45), 0 20px 40px rgba(0, 0, 0, 0.8);
+  flex-shrink: 0;
+}
+
+.hero-artist-name {
+  font-size: 78px;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.02;
+  margin-bottom: 8px;
+}
+
+.sub-artist-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+}
+
+/* ========================================================
+   SLIDE 7: TOP DISCOVERIES
+   ======================================================== */
+.slide-7-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+}
+
+.hero-disc-card {
+  height: 480px;
+  background: linear-gradient(135deg, rgba(255, 0, 122, 0.25) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1.5px solid var(--theme-accent, rgba(255, 0, 122, 0.45));
+  border-radius: 44px;
+  padding: 36px 44px;
+  display: flex;
+  gap: 38px;
+  align-items: center;
+  backdrop-filter: blur(35px);
+  flex-shrink: 0;
+}
+
+.hero-disc-pill {
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  color: #ff3399;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* ========================================================
+   SLIDE 8: TOP GENRES & REPRESENTATIVE ANTHEMS
+   ======================================================== */
+.slide-8-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 18px;
+}
+
+.donut-section {
+  height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.donut-container {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.donut-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.donut-center-card {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1a271d 0%, #0d140e 100%);
+  border: 2px solid var(--theme-primary, rgba(0, 255, 135, 0.45));
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px var(--theme-primary, rgba(0, 255, 135, 0.30));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 5;
+}
+
+.donut-top-tag {
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--theme-primary, #00ff87);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.donut-hero-genre {
+  font-size: 76px;
+  font-weight: 900;
+  line-height: 1;
+  color: #ffffff;
+  margin: 6px 0;
+  letter-spacing: -1.5px;
+}
+
+.genre-grid-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+}
+
+.genre-anthem-card {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 32px;
+  padding: 0 38px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(30px);
+}
+
+.genre-anthem-name {
+  font-size: 52px;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.genre-anthem-track {
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--theme-primary, #00ff87);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.genre-footer-ribbon {
+  height: 95px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  font-weight: 800;
+  color: #ffffff;
+  flex-shrink: 0;
+}

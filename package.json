@@ -1,0 +1,12 @@
+{
+  "name": "wrapped-video-engine",
+  "version": "1.0.0",
+  "description": "Deterministic Web-to-Video Storyboard Rendering Engine",
+  "scripts": {
+    "preview": "node src/renderer/preview_engine.js",
+    "render": "node src/renderer/render_engine.js"
+  },
+  "dependencies": {
+    "puppeteer-core": "^25.12.0"
+  }
+}
