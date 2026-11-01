@@ -6,18 +6,11 @@ A deterministic, frame-accurate web-to-video rendering pipeline and interactive 
   <img src="img/web_studio_preview.png" alt="2026 Wrapped Live Curation Studio" width="100%" />
 </div>
 
-<p align="center">
-  <img src="img/story_slide1.png" width="48%" alt="Slide 1 - Your Year in Sound" />
-  &nbsp;
-  <img src="img/story_slide2.png" width="48%" alt="Slide 2 - The Big Numbers" />
-</p>
-
 ---
 
-## Table of Contents
+## Overview
 - [Overview](#overview)
 - [Key Features](#key-features)
-- [System Architecture](#system-architecture)
 - [The 10 Wrapped Slides](#the-10-wrapped-slides)
 - [Dynamic Background Theme & Palette Engine](#dynamic-background-theme--palette-engine)
 - [Project Structure](#project-structure)
@@ -91,16 +84,116 @@ Each slide runs for **5.0 seconds** (0.65s staggered entrance, 3.80s living dyna
 
 | # | Slide Name | Visual Highlights | Key Data Displayed |
 |---|---|---|---|
-| **0** | **Your Year in Sound** | Harmonic frequency waveform with month timeline markers (`JAN`, `MAR`, `MAY (PEAK)`, etc.) & 4 Bento pods | Total Plays, Minutes Streamed, Different Songs, Longest Day Streak |
-| **1** | **The Big Numbers** | 28-channel live audio equalizer stream & hero metric card | Total Listening Time, Total Plays, Different Songs, Daily Average (min/day), Worldwide Listener Tier |
-| **2** | **Listening Clock** | 24-hour radial compass with workday bridge (7 AM – 3 PM) & weekly equalizer | Peak Hour, Workday listening share, Weekly rhythm with Wednesday and Saturday spikes |
-| **3** | **Top Songs** | Spinning vinyl disc with high-res cover + curated 1..5 ranking | Top 5 curated songs with titles, artists, and embedded FLAC front covers (clean, no play counts) |
-| **4** | **Top Albums** | Spinning purple vinyl disc + curated 1..5 album grid | Top 5 albums, artist names, and album artwork |
-| **5** | **Top Artists** | Pulsating avatar glow + ranking cards | Top 5 curated artists with portraits resolved from Namida archives |
-| **6** | **Top Discoveries** | Magenta neon halo & new artist discovery cards | 5 breakthrough artists discovered during the year |
-| **7** | **Top Genres** | SVG Donut chart rollout & 5 genre anthem cards | Top 5 genres paired with representative signature anthems |
-| **8** | **Most Listened Songs** | Spotlight card with vinyl record + telemetry pills | Top 5 streamed songs from raw Namida logs with exact play counts and minutes |
-| **9** | **Most Listened Artists** | Avatar spotlight + streaming metric pills | Top 5 streamed artists from raw Namida logs with exact play counts and minutes |
+| **1** | **Your Year in Sound** | Harmonic frequency waveform with 12-month timeline markers (`JAN`, `MAR`, `MAY (PEAK)`) & 4 Bento pods | Total Plays, Minutes Streamed, Different Songs, Longest Day Streak |
+| **2** | **The Big Numbers** | 28-channel live audio equalizer stream & hero metric card | Total Listening Time, Total Plays, Different Songs, Daily Average (`min/day`), Worldwide Listener Tier |
+| **3** | **Listening Clock** | 24-hour radial compass with workday bridge (7 AM – 3 PM) & weekly equalizer | Peak Hour, Workday listening share, Weekly rhythm with Wednesday and Saturday spikes |
+| **4** | **Top Songs** | Spinning vinyl disc with high-res cover + curated 1..5 ranking | Top 5 curated songs with titles, artists, and embedded FLAC front covers |
+| **5** | **Top Albums** | Spinning purple vinyl disc + curated 1..5 album grid | Top 5 albums, artist names, and album artwork |
+| **6** | **Top Artists** | Pulsating avatar glow + ranking cards | Top 5 curated artists with portraits resolved from Namida archives |
+| **7** | **Top Discoveries** | Magenta neon halo & new artist discovery cards | 5 breakthrough artists discovered during the year |
+| **8** | **Top Genres** | SVG Donut chart rollout & 5 genre anthem cards | Top 5 genres paired with representative signature anthems |
+| **9** | **Most Listened Songs** | Spotlight card with vinyl record + telemetry pills | Top 5 streamed songs from raw Namida logs with exact play counts and minutes |
+| **10** | **Most Listened Artists** | Avatar spotlight + streaming metric pills | Top 5 streamed artists from raw Namida logs with exact play counts and minutes |
+
+---
+
+### Slide 1: Your Year in Sound
+<p align="center">
+  <img src="img/story_slide1.png" width="380" alt="Slide 1 - Your Year in Sound" />
+</p>
+
+- **Motion & Layout**: Smooth cubic-bezier harmonic frequency waveform across a 12-month horizontal axis, animated peak month pill (`MAY (PEAK)`), and 4 glassmorphic Bento metric pods.
+- **Data Displayed**: Total Plays, Total Minutes Streamed, Unique Songs Count, and Longest Daily Listening Streak.
+
+---
+
+### Slide 2: The Big Numbers
+<p align="center">
+  <img src="img/story_slide2.png" width="380" alt="Slide 2 - The Big Numbers" />
+</p>
+
+- **Motion & Layout**: 28-channel animated SVG equalizer stream, prominent $148\text{px}$ hero metric card, twin secondary metric cards, and a daily listening rhythm banner.
+- **Data Displayed**: Total Listening Time, Total Plays, Different Songs, Daily Listening Average (`147.4 min / day`), and Worldwide Listener Tier status (`Top 0.05% Listeners Worldwide`).
+
+---
+
+### Slide 3: Listening Clock
+<p align="center">
+  <img src="img/story_slide3.png" width="380" alt="Slide 3 - Listening Clock" />
+</p>
+
+- **Motion & Layout**: 24-hour radial clock compass with golden chronotype indicator, 7-day weekly equalizer bars, and workday listening share card.
+- **Data Displayed**: Peak Listening Hour, Workday Share (equidistributed across 7:00 AM – 3:00 PM), Chronotype profile (`Night Owl`), and Weekly Rhythm Spikes (`Wednesday & Saturday Releases`).
+
+---
+
+### Slide 4: Top Songs
+<p align="center">
+  <img src="img/story_slide4.png" width="380" alt="Slide 4 - Top Songs" />
+</p>
+
+- **Motion & Layout**: Spinning vinyl record with tone arm and high-resolution album artwork center label, followed by a curated #1 through #5 ranking list.
+- **Data Displayed**: Top 5 Curated Favorite Songs with track title, artist name, and embedded FLAC front cover art.
+
+---
+
+### Slide 5: Top Albums
+<p align="center">
+  <img src="img/story_slide5.png" width="380" alt="Slide 5 - Top Albums" />
+</p>
+
+- **Motion & Layout**: Large purple vinyl disc showcase with album cover center, paired with 4 glassmorphic supporting album cards.
+- **Data Displayed**: Top 5 Curated Albums with album title, release year, artist credits, and cover art.
+
+---
+
+### Slide 6: Top Artists
+<p align="center">
+  <img src="img/story_slide6.png" width="380" alt="Slide 6 - Top Artists" />
+</p>
+
+- **Motion & Layout**: Circular hero artist portrait with chromatic aberration glow and `#1 ARTIST` ribbon, accompanied by #2 through #5 artist cards.
+- **Data Displayed**: Top 5 Favorite Artists with circular avatars resolved automatically from the Namida artist backup database.
+
+---
+
+### Slide 7: Top Discoveries
+<p align="center">
+  <img src="img/story_slide7.png" width="380" alt="Slide 7 - Top Discoveries" />
+</p>
+
+- **Motion & Layout**: Magenta neon halo spotlight, discovery year badge, and 5 breakout artist discovery cards.
+- **Data Displayed**: 5 Breakthrough Creators and Artists discovered and added to playback rotation during 2026.
+
+---
+
+### Slide 8: Top Genres
+<p align="center">
+  <img src="img/story_slide8.png" width="380" alt="Slide 8 - Top Genres" />
+</p>
+
+- **Motion & Layout**: Multi-colored SVG concentric donut chart with percentage breakdown, genre share cards, and representative anthem ribbon.
+- **Data Displayed**: Top 5 Music Genres paired with signature anthem tracks.
+
+---
+
+### Slide 9: Most Listened Songs (Namida Telemetry)
+<p align="center">
+  <img src="img/story_slide9.png" width="380" alt="Slide 9 - Most Listened Songs" />
+</p>
+
+- **Motion & Layout**: Spotlight card with vinyl record, rank indicator pills, and exact telemetry listening counters.
+- **Data Displayed**: Top 5 Streamed Songs from raw Namida playback logs with exact play counts and accumulated listening minutes.
+
+---
+
+### Slide 10: Most Listened Artists (Namida Telemetry)
+<p align="center">
+  <img src="img/story_slide10.png" width="380" alt="Slide 10 - Most Listened Artists" />
+</p>
+
+- **Motion & Layout**: Hero avatar spotlight with neon border glow, verified telemetry badges, and stacked artist stream ranking pills.
+- **Data Displayed**: Top 5 Streamed Artists computed directly from SQLite play events with total plays and streaming minutes.
 
 ---
 
@@ -127,8 +220,7 @@ NamidaWrapped/
 │   └── .gitkeep
 ├── img/                                   # High-resolution screenshots and visual previews
 │   ├── web_studio_preview.png             # Split-screen Web Studio dashboard preview
-│   ├── story_slide1.png                   # Slide 1 (Your Year in Sound) vertical capture
-│   └── story_slide2.png                   # Slide 2 (The Big Numbers) vertical capture
+│   └── story_slide1.png .. story_slide10.png # Vertical captures for all 10 story slides
 ├── output/                                # Generated manifests, audio, storyboards, and MP4s
 │   ├── .gitkeep
 │   ├── artworks/                          # Extracted artist portraits and album artwork

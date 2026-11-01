@@ -34,13 +34,15 @@ async function capturePreviews(options = {}) {
 
   const times = options.times || [
     { name: 'slide_1_year_in_sound', t: 2.5 },
-    { name: 'slide_2_big_numbers', t: 7.2 },
-    { name: 'slide_3_listening_clock', t: 11.9 },
-    { name: 'slide_4_top_songs', t: 16.6 },
-    { name: 'slide_5_top_albums', t: 21.4 },
-    { name: 'slide_6_top_artists', t: 26.1 },
-    { name: 'slide_7_top_discoveries', t: 30.8 },
-    { name: 'slide_8_top_genres', t: 35.6 }
+    { name: 'slide_2_big_numbers', t: 7.5 },
+    { name: 'slide_3_listening_clock', t: 12.5 },
+    { name: 'slide_4_top_songs', t: 17.5 },
+    { name: 'slide_5_top_albums', t: 22.5 },
+    { name: 'slide_6_top_artists', t: 27.5 },
+    { name: 'slide_7_top_discoveries', t: 32.5 },
+    { name: 'slide_8_top_genres', t: 37.5 },
+    { name: 'slide_9_most_listened_songs', t: 42.5 },
+    { name: 'slide_10_most_listened_artists', t: 47.5 }
   ];
 
   for (const s of times) {

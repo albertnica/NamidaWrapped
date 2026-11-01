@@ -145,17 +145,17 @@ async def get_status() -> PanelStatusResponse:
 
     single_url = _output_url(single_path) if single_path.exists() else None
 
-    # Prioritize active panel slice if available, then fallback to last rendered video
-    if single_path.exists():
-        video_url = _output_url(single_path)
-    elif studio_service.last_slice_file and studio_service.last_slice_file.exists():
+    # Prioritize the most recently rendered video file if available
+    if studio_service.last_slice_file and studio_service.last_slice_file.exists():
         video_url = _output_url(studio_service.last_slice_file)
-    elif slice_path.exists():
-        video_url = _output_url(slice_path)
     elif custom_path.exists():
         video_url = _output_url(custom_path)
     elif full_video_path.exists():
         video_url = _output_url(full_video_path)
+    elif slice_path.exists():
+        video_url = _output_url(slice_path)
+    elif single_path.exists():
+        video_url = _output_url(single_path)
     else:
         video_url = None
 

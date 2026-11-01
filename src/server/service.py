@@ -655,13 +655,15 @@ renderVideo({{
                 print(f"[Error] Custom sequence render failed: {stderr.decode('utf-8', errors='replace')}")
             else:
                 self.last_slice_file = out_path
+                import shutil
                 if target_path:
-                    import shutil
                     dest_p = Path(target_path.strip(' "\''))
                     if not dest_p.is_absolute():
                         dest_p = (ROOT_DIR / dest_p).resolve()
                     dest_p.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(out_path, dest_p)
+                if valid_panels == list(range(10)):
+                    shutil.copy2(out_path, OUTPUT_VIDEO_PATH)
         finally:
             self.is_rendering = False
             self.render_progress = 100.0

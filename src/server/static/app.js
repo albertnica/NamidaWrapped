@@ -1553,11 +1553,13 @@ async function browseSavePath() {
       const inputEl = document.getElementById('inp-export-path');
       if (inputEl) inputEl.value = data.selected_path;
       showTerminalToast(`[PATH SELECTED] ${data.selected_path}`);
+      return data.selected_path;
     }
   } catch (err) {
     console.error('File browse error:', err);
     showTerminalToast(`[ERROR] File explorer dialog failed: ${err.message}`, true);
   }
+  return null;
 }
 
 async function saveCurrentPanelLocal() {
@@ -1585,53 +1587,52 @@ async function saveCurrentPanelLocal() {
 }
 
 /**
- * Saves and renders the video according to active parameters to the requested destination path.
- * Why: Guarantees that saving executes a fresh render matching current parameters
- * (whether custom slice sequence or single panel slice or full review), and updates the right-hand player.
+ * Saves and renders the video strictly according to the Custom Slices & Order settings
+ * to the requested destination path on disk.
+ * Why: Ensures that whenever the user clicks 'Save Video', the output file reflects the exact
+ * selection, sequence, and individual slide audio configuration chosen in the Composer.
  */
 async function saveVideoToPath() {
   const inputEl = document.getElementById('inp-export-path');
-  const targetPath = (inputEl ? inputEl.value : '').trim();
+  let targetPath = (inputEl ? inputEl.value : '').trim();
 
+  // If no path is entered yet, proactively open Windows File Explorer
   if (!targetPath) {
-    showTerminalToast('[WARNING] Please choose or enter a destination path with Browse... first', true);
-    if (inputEl) inputEl.focus();
+    showTerminalToast('[INFO] Opening Windows File Explorer to choose destination...');
+    targetPath = await browseSavePath();
+    if (!targetPath) {
+      showTerminalToast('[INFO] Save Video cancelled: No destination path chosen.');
+      return;
+    }
+  }
+
+  // Derive slice sequence strictly from Custom Slices & Order
+  const selectedOrdered = appState.slicesOrder.filter(pid => appState.selectedSlices.has(pid));
+  if (selectedOrdered.length === 0) {
+    showTerminalToast('[WARNING] Please select at least one slice in Custom Slices & Order before saving.', true);
     return;
   }
 
-  // Determine what parameters to render according to:
-  const selectedOrdered = appState.slicesOrder.filter(pid => appState.selectedSlices.has(pid));
-  const isCustomSequence = selectedOrdered.length !== 10 || selectedOrdered.some((pid, idx) => pid !== idx);
+  const isDefault10 = selectedOrdered.length === 10 && selectedOrdered.every((pid, idx) => pid === idx);
+  const totalSec = (selectedOrdered.length * 5.0).toFixed(1);
+  const seqNames = selectedOrdered.map(p => `#${p + 1}`).join(' → ');
+  const modeDesc = isDefault10
+    ? 'Full Presentation (10 slides • 50.0s)'
+    : `Custom Sequence (${selectedOrdered.length} slides • ${totalSec}s: [${seqNames}])`;
 
-  let payload = {
+  const payload = {
     target_path: targetPath,
-    render_first: true
+    render_first: true,
+    selected_panels: selectedOrdered,
+    fps: 25
   };
 
-  let modeDesc = 'Full Video (10 slides)';
-  if (isCustomSequence) {
-    payload.selected_panels = selectedOrdered;
-    modeDesc = `Custom Sequence (${selectedOrdered.length} slides)`;
-  } else if (appState.playbackScope === 'single') {
-    payload.panel_id = appState.currentPanel;
-    modeDesc = `Panel ${appState.currentPanel + 1} Slice (5.0s)`;
-  } else {
-    payload.selected_panels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    modeDesc = 'Full Presentation (50.0s)';
-  }
-
   setPreviewMode('video');
-  const isCustom = appState.playbackScope === 'custom';
-  const isSingle = appState.playbackScope === 'single';
-  const badgeText = isCustom ? 'CUSTOM EXPORT (25 FPS)' : (isSingle ? 'SLICE EXPORT (25 FPS)' : 'FULL EXPORT (25 FPS)');
-  const titleText = isCustom ? 'Exporting Custom Story' : (isSingle ? `Exporting Slide #${appState.currentPanel + 1}` : 'Exporting Full Story');
-  const subText = `${modeDesc} • Generating full 25 FPS stream with FFmpeg`;
-
   showRenderOverlay({
-    badge: badgeText,
-    title: titleText,
-    subtitle: subText,
-    path: targetPath || null
+    badge: isDefault10 ? 'FULL EXPORT (25 FPS)' : 'CUSTOM EXPORT (25 FPS)',
+    title: 'Exporting Presentation Video',
+    subtitle: `${modeDesc} • Generating full 25 FPS stream with FFmpeg`,
+    path: targetPath
   });
 
   showTerminalToast(`[RENDERING] Building ${modeDesc} and saving to: ${targetPath}...`);
