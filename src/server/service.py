@@ -298,21 +298,27 @@ class StudioService:
             try:
                 data = json.loads(manifest_path.read_text(encoding="utf-8"))
                 for t in data.get("top_tracks", [])[:5]:
+                    art_path = t.get("artwork_path", "")
+                    art_img = self.builder.resolve_track_artwork(art_path) if art_path else ""
                     tracks.append({
                         "rank": t.get("rank", len(tracks) + 1),
                         "title": t.get("title", ""),
                         "artist": t.get("artist", ""),
                         "plays": t.get("plays", 0),
                         "total_listen_minutes": round(t.get("total_listen_minutes", 0), 1),
-                        "artwork_path": t.get("artwork_path", "")
+                        "artwork_path": art_path,
+                        "image": art_img or (f"/output/{art_path}" if art_path else "")
                     })
                 for a in data.get("top_artists", [])[:5]:
                     p = a.get("plays", 0)
                     a_name = a.get("artist", "")
+                    actual_mins = a.get("total_listen_minutes")
+                    est_mins = round(float(actual_mins)) if actual_mins is not None else round(p * 2.8)
                     artists.append({
                         "artist": a_name,
                         "plays": p,
-                        "estimated_minutes": round(p * 2.8),
+                        "estimated_minutes": est_mins,
+                        "total_listen_minutes": actual_mins,
                         "image": self.builder.resolve_artist_avatar(a_name)
                     })
             except Exception as e:
@@ -329,11 +335,11 @@ class StudioService:
             ]
         if not artists:
             raw_arts = [
-                ("GOTOU寄生獣, vodvor", 510, 1428),
-                ("Daegho", 193, 540),
-                ("MUPP", 152, 425),
-                ("Savage Ga$p", 149, 417),
-                ("Kordhell, Scarlxrd", 140, 392)
+                ("GOTOU寄生獣, vodvor", 675, 1445),
+                ("RJ Pasin", 428, 1106),
+                ("Daegho", 211, 566),
+                ("Savage Ga$p", 195, 610),
+                ("MUPP", 185, 331)
             ]
             artists = [
                 {
@@ -345,7 +351,31 @@ class StudioService:
                 for name, plays, mins in raw_arts
             ]
 
-        return {"top_tracks": tracks, "top_artists": artists}
+        from datetime import datetime, timezone
+        from src.config import FILES_DIR, get_latest_backup_path
+        latest_archive = get_latest_backup_path(FILES_DIR)
+        archive_info = {
+            "name": latest_archive.name if latest_archive.exists() else "None",
+            "exists": latest_archive.exists(),
+            "mtime": (
+                datetime.fromtimestamp(latest_archive.stat().st_mtime, tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+                if latest_archive.exists()
+                else ""
+            ),
+        }
+        headline = {}
+        if manifest_path.exists():
+            try:
+                headline = json.loads(manifest_path.read_text(encoding="utf-8")).get("headline_metrics", {})
+            except Exception:
+                pass
+
+        return {
+            "top_tracks": tracks,
+            "top_artists": artists,
+            "headline_metrics": headline,
+            "source_archive": archive_info,
+        }
 
     @staticmethod
     def extract_flac(flac_path_str: str) -> dict[str, Any]:

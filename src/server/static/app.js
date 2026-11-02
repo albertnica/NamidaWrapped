@@ -183,6 +183,19 @@ async function fetchStatus() {
     appState.videoSliceUrl = data.video_slice_url;
     appState.singleSliceUrl = data.single_slice_url;
 
+    // Display active telemetry backup archive from files/
+    if (appState.telemetryBaselines && appState.telemetryBaselines.source_archive) {
+      const src = appState.telemetryBaselines.source_archive;
+      const label = document.getElementById('source-archive-text');
+      if (label && src.name) {
+        label.textContent = `files/${src.name}`;
+      }
+      const pill = document.getElementById('source-archive-pill');
+      if (pill && src.name) {
+        pill.title = `Active backup: files/${src.name} (${src.mtime || 'latest'})\nClick to re-sync files/`;
+      }
+    }
+
     if (appState.curation && appState.curation.theme) {
       appState.theme = appState.curation.theme;
       syncThemeUI(appState.theme);
@@ -219,6 +232,29 @@ async function fetchStatus() {
     }
   } catch (err) {
     console.error('Failed to load status:', err);
+  }
+}
+
+/**
+ * Triggers re-synchronization with the newest backup in files/ and reloads the preview.
+ * @param {Event} [e] Click event
+ */
+async function syncLatestBackup(e) {
+  if (e && typeof e.stopPropagation === 'function') {
+    e.stopPropagation();
+  }
+  const label = document.getElementById('source-archive-text');
+  const origText = label ? label.textContent : '';
+  if (label) label.textContent = 'Syncing files/...';
+  try {
+    const resp = await fetch('/api/studio/sync-backup?force=true', { method: 'POST' });
+    const res = await resp.json();
+    showToast(res.message || 'Backup synchronized', 'success');
+    await fetchStatus();
+    reloadIframePreview();
+  } catch (err) {
+    if (label) label.textContent = origText;
+    showToast('Failed to sync backup: ' + err, 'error');
   }
 }
 
@@ -722,17 +758,19 @@ function renderPanelForm(panelId) {
     ];
 
     const cardsHtml = rawTracks.slice(0, 5).map((t, idx) => {
+      const thumbSrc = t.image || (t.artwork_path ? `/output/${t.artwork_path}` : DEFAULT_THUMB_SVG);
       return `
         <div class="curated-card-input" style="align-items:center;padding:12px 14px;margin-bottom:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(0,255,135,0.18);">
           <div class="curated-rank" style="margin:0 12px 0 0;">${idx + 1}</div>
-          <div style="flex:1;">
+          <img class="curated-thumb" style="width:44px;height:44px;border-radius:8px;object-fit:cover;margin-right:12px;border:1px solid rgba(0,255,135,0.3);flex-shrink:0;" src="${thumbSrc}" alt="${t.title}" onerror="this.src=DEFAULT_THUMB_SVG">
+          <div style="flex:1;min-width:0;">
             <div style="display:flex;justify-content:space-between;align-items:center;">
-              <div style="font-weight:700;font-size:14px;color:#fff;">${t.title}</div>
-              <span class="t-green" style="font-size:12px;font-weight:700;">⚡ ${t.plays} plays</span>
+              <div style="font-weight:700;font-size:14px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:8px;">${t.title}</div>
+              <span class="t-green" style="font-size:12px;font-weight:700;white-space:nowrap;">⚡ ${t.plays} plays</span>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
-              <div style="font-size:12px;color:#a4bba6;">${t.artist}</div>
-              <span style="font-size:11px;color:#8fa592;">⏱️ ${t.total_listen_minutes} minutes</span>
+              <div style="font-size:12px;color:#a4bba6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:8px;">${t.artist}</div>
+              <span style="font-size:11px;color:#8fa592;white-space:nowrap;">⏱️ ${t.total_listen_minutes} minutes</span>
             </div>
           </div>
         </div>
@@ -752,11 +790,11 @@ function renderPanelForm(panelId) {
     `;
   } else if (panelId === 9) {
     const rawArtists = (appState.telemetryBaselines && appState.telemetryBaselines.top_artists) || [
-      { artist: "GOTOU寄生獣, vodvor", plays: 510, estimated_minutes: 1428 },
-      { artist: "Daegho", plays: 193, estimated_minutes: 540 },
-      { artist: "MUPP", plays: 152, estimated_minutes: 425 },
-      { artist: "Savage Ga$p", plays: 149, estimated_minutes: 417 },
-      { artist: "Kordhell, Scarlxrd", plays: 140, estimated_minutes: 392 }
+      { artist: "GOTOU寄生獣, vodvor", plays: 675, estimated_minutes: 1445 },
+      { artist: "RJ Pasin", plays: 428, estimated_minutes: 1106 },
+      { artist: "Daegho", plays: 211, estimated_minutes: 566 },
+      { artist: "Savage Ga$p", plays: 195, estimated_minutes: 610 },
+      { artist: "MUPP", plays: 185, estimated_minutes: 331 }
     ];
 
     const cardsHtml = rawArtists.slice(0, 5).map((a, idx) => {

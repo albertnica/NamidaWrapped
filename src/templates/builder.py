@@ -82,6 +82,22 @@ class StoryboardBuilder:
 
         return fallback
 
+    def resolve_track_artwork(self, artwork_path: str | None, fallback: str = "") -> str:
+        """Loads extracted track artwork into a base64 data URI.
+
+        Why: Embedded base64 data URIs ensure the storyboard renders self-contained
+        pixel-perfect covers across headless Puppeteer, iframe previews, and video rendering.
+        """
+        if artwork_path:
+            candidate = OUTPUT_DIR / artwork_path
+            if candidate.exists() and candidate.is_file() and candidate.stat().st_size > 0:
+                try:
+                    b64 = base64.b64encode(candidate.read_bytes()).decode('ascii')
+                    return f"data:image/png;base64,{b64}"
+                except Exception:
+                    pass
+        return fallback
+
     def build(
         self,
         output_file: Path = STORY_HTML_PATH,
@@ -254,7 +270,7 @@ class StoryboardBuilder:
         day_heights: dict[str, int] = {}
         for d_key, d_val in week_days_mins.items():
             ratio = d_val / max_day_mins
-            day_heights[f"eq-{d_key}"] = round(80 + ratio * 155)
+            day_heights[f"eq-{d_key}"] = round(50 + ratio * 135)
 
         day_peak_classes = {
             d_key: " peak" if d_key == peak_day_key else ""
@@ -357,7 +373,7 @@ class StoryboardBuilder:
             artist = t_base.get("artist") or fallback_artists[i]
             base_plays = int(t_base.get("plays", fallback_plays[i]))
             base_mins = float(t_base.get("total_listen_minutes", fallback_mins[i]))
-            art = fallback_arts[i]
+            art = self.resolve_track_artwork(t_base.get("artwork_path"), fallback_arts[i])
 
             ml_tracks.append({
                 "rank": i + 1,
@@ -371,14 +387,15 @@ class StoryboardBuilder:
         # Slide 10: 10. Most Listened Artists (Automated Namida Telemetry - Read-Only)
         raw_top_artists = stats_data.get("top_artists", [])
         ml_artists = []
-        fallback_names = ["GOTOU寄生獣, vodvor", "Daegho", "MUPP", "Savage Ga$p", "Kordhell, Scarlxrd"]
-        fallback_art_plays = [510, 193, 152, 149, 140]
+        fallback_names = ["GOTOU寄生獣, vodvor", "RJ Pasin", "Daegho", "Savage Ga$p", "MUPP"]
+        fallback_art_plays = [675, 428, 211, 195, 185]
         fallback_imgs = [s4["artwork"], s3["artwork"], s2["artwork"], s1["artwork"], s5["artwork"]]
         for i in range(5):
             a_base = raw_top_artists[i] if len(raw_top_artists) > i else {}
             name = a_base.get("artist") or fallback_names[i]
             base_plays = int(a_base.get("plays", fallback_art_plays[i]))
-            base_mins = round(base_plays * 2.8)
+            actual_mins = a_base.get("total_listen_minutes")
+            base_mins = round(float(actual_mins)) if actual_mins is not None else round(base_plays * 2.8)
             img = self.resolve_artist_avatar(name, fallback_imgs[i])
 
             ml_artists.append({
@@ -647,18 +664,20 @@ class StoryboardBuilder:
         <div class="clock-stage-box anim-hero" id="s2-clock">
           <div class="clock-relative-canvas">
             <svg class="clock-svg-layer" viewBox="0 0 680 680">
-              <circle cx="340" cy="340" r="260" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="50"/>
-              <text x="340" y="45" fill="#8ca08e" font-size="26" font-weight="800" text-anchor="middle">12 AM</text>
-              <text x="645" y="348" fill="#8ca08e" font-size="26" font-weight="800" text-anchor="middle">6 AM</text>
-              <text x="340" y="650" fill="#8ca08e" font-size="26" font-weight="800" text-anchor="middle">12 PM</text>
-              <text x="35" y="348" fill="#8ca08e" font-size="26" font-weight="800" text-anchor="middle">6 PM</text>
+              <circle cx="340" cy="340" r="268" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="2" stroke-dasharray="4 6"/>
+              <circle cx="340" cy="340" r="215" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              <circle cx="340" cy="340" r="158" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+              <text x="340" y="46" fill="rgba(255,255,255,0.85)" font-size="34" font-weight="900" text-anchor="middle" letter-spacing="1">12 AM</text>
+              <text x="640" y="352" fill="rgba(255,255,255,0.85)" font-size="34" font-weight="900" text-anchor="middle" letter-spacing="1">6 AM</text>
+              <text x="340" y="658" fill="rgba(255,255,255,0.85)" font-size="34" font-weight="900" text-anchor="middle" letter-spacing="1">12 PM</text>
+              <text x="44" y="352" fill="rgba(255,255,255,0.85)" font-size="34" font-weight="900" text-anchor="middle" letter-spacing="1">6 PM</text>
               <g id="clock-rays"></g>
             </svg>
 
             <div class="clock-center-disc" id="clock-center-pill">
               <div class="clock-center-time">{peak_hour_str}</div>
               <div class="clock-center-sub">PEAK HOUR</div>
-              <div class="clock-center-plays">{peak_desc_str}</div>
+              <div class="clock-center-plays">{peak_plays_fmt} Plays</div>
             </div>
           </div>
         </div>

@@ -37,6 +37,7 @@ class TelemetryStatsEngine:
         track_play_counts: Counter[str] = Counter()
         track_durations_acc: Counter[str] = Counter()
         artist_counts: Counter[str] = Counter()
+        artist_durations_acc: Counter[str] = Counter()
         individual_artist_counts: Counter[str] = Counter()
         genre_counts: Counter[str] = Counter()
         hourly_counts: Counter[int] = Counter()
@@ -78,13 +79,25 @@ class TelemetryStatsEngine:
 
             track_play_counts[raw_path] += 1
             track_durations_acc[raw_path] += dur_ms
-            artist_counts[meta["artist"]] += 1
+            # Filter out unknown/placeholder artists and normalize collaborative tags
+            raw_art = meta["artist"].strip() if meta.get("artist") else ""
+            low_art = raw_art.lower()
+            if raw_art and low_art not in ("unknown artist", "unknown", "various artists", "<unknown>", "flac"):
+                if "gotou" in low_art and "vodvor" in low_art:
+                    norm_artist = "GOTOU寄生獣, vodvor"
+                elif "rj pasin" in low_art:
+                    norm_artist = "RJ Pasin"
+                else:
+                    norm_artist = raw_art
 
-            # Split multi-artists for accurate diversity count
-            for a in meta["artist"].replace(" & ", ", ").split(","):
-                clean_art = a.strip()
-                if clean_art and clean_art.lower() != "unknown artist":
-                    individual_artist_counts[clean_art] += 1
+                artist_counts[norm_artist] += 1
+                artist_durations_acc[norm_artist] += dur_ms
+
+                # Split multi-artists for accurate diversity count
+                for a in raw_art.replace(" & ", ", ").split(","):
+                    clean_art = a.strip()
+                    if clean_art and clean_art.lower() not in ("unknown artist", "unknown", "various artists", "<unknown>", "flac"):
+                        individual_artist_counts[clean_art] += 1
 
             genre_counts[meta["genre"]] += 1
             daily_tracks_played[date_str][raw_path] += 1
@@ -242,7 +255,14 @@ class TelemetryStatsEngine:
             },
             "top_tracks": top_tracks,
             "top_genres": top_genres,
-            "top_artists": [{"artist": a, "plays": c} for a, c in artist_counts.most_common(10)],
+            "top_artists": [
+                {
+                    "artist": a,
+                    "plays": c,
+                    "total_listen_minutes": round(artist_durations_acc[a] / 60000.0, 1)
+                }
+                for a, c in artist_counts.most_common(10)
+            ],
             "user_curation": curation
         }
 

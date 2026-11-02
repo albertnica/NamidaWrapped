@@ -14,15 +14,18 @@ from typing import NoReturn
 from src.analyzer.extractor import BackupExtractor
 from src.analyzer.normalizer import TrackResolver
 from src.analyzer.stats import TelemetryStatsEngine
+from src.analyzer.sync import sync_backup_data
 from src.config import (
     CURRENT_YEAR,
     DEFAULT_BACKUP_PATH,
+    FILES_DIR,
     LOGS_DIR,
     OUTPUT_DIR,
     ROOT_DIR,
     SERVER_LOG_PATH,
     STATS_JSON_PATH,
     STORY_HTML_PATH,
+    get_latest_backup_path,
 )
 from src.templates.builder import StoryboardBuilder
 
@@ -32,8 +35,9 @@ def run_analyze(archive_path: Path, target_year: int) -> dict:
 
     Why: Separates raw archive decompression and data normalization from rendering.
     """
-    print(f"\n[1/3] Initializing Data Extraction from: {archive_path.name}")
-    extractor = BackupExtractor(archive_path)
+    archive_to_use = archive_path or get_latest_backup_path(FILES_DIR)
+    print(f"\n[1/3] Initializing Data Extraction from: {archive_to_use.name}")
+    extractor = BackupExtractor(archive_to_use)
 
     print("[2/3] Parsing SQLite database and building normalization indices...")
     raw_tracks = extractor.read_tracks_database()
@@ -58,7 +62,9 @@ def run_generate(target_year: int) -> Path:
     """Builds the full-bleed HTML5 storyboard combining templates, assets, and metrics.
 
     Why: Produces an offline, self-contained DOM that headless Chrome can seek deterministically.
+    Automatically checks and synchronizes telemetry if a newer backup exists in files/.
     """
+    sync_backup_data(target_year=target_year, recompile_storyboard=False)
     print(f"\n[1/1] Compiling HTML5 Storyboard for {target_year} Wrapped...")
     builder = StoryboardBuilder(target_year=target_year)
     out_html = builder.build(output_file=STORY_HTML_PATH)
@@ -225,6 +231,9 @@ def run_studio(
 
     url = f"http://{host}:{port}"
 
+    # Auto-synchronize telemetry with the freshest backup in files/ upon launch
+    sync_backup_data(target_year=CURRENT_YEAR)
+
     if not foreground:
         free_port(port)
         LOGS_DIR.mkdir(parents=True, exist_ok=True)
@@ -324,9 +333,15 @@ def main() -> None:
     # Command: configure
     subparsers.add_parser("configure", help="Launch interactive CLI wizard for Spotify additions & curated selections")
 
+    # Command: sync
+    p_sync = subparsers.add_parser("sync", help="Synchronize telemetry data from newest backup in files/")
+    p_sync.add_argument("--archive", type=Path, default=None, help="Explicit path to backup ZIP (defaults to newest in files/)")
+    p_sync.add_argument("--year", type=int, default=CURRENT_YEAR, help="Target statistics year")
+    p_sync.add_argument("--force", action="store_true", help="Force re-aggregation even if manifest is up to date")
+
     # Command: analyze
     p_analyze = subparsers.add_parser("analyze", help="Extract and aggregate data from backup archive")
-    p_analyze.add_argument("--archive", type=Path, default=DEFAULT_BACKUP_PATH, help="Path to backup ZIP")
+    p_analyze.add_argument("--archive", type=Path, default=None, help="Path to backup ZIP (defaults to newest in files/)")
     p_analyze.add_argument("--year", type=int, default=CURRENT_YEAR, help="Target statistics year")
 
     # Command: generate
@@ -341,7 +356,7 @@ def main() -> None:
 
     # Command: all
     p_all = subparsers.add_parser("all", help="Execute complete pipeline: analyze -> generate -> render")
-    p_all.add_argument("--archive", type=Path, default=DEFAULT_BACKUP_PATH, help="Path to backup ZIP")
+    p_all.add_argument("--archive", type=Path, default=None, help="Path to backup ZIP (defaults to newest in files/)")
     p_all.add_argument("--year", type=int, default=CURRENT_YEAR, help="Target statistics year")
 
     args = parser.parse_args()
@@ -369,8 +384,11 @@ def main() -> None:
             run_setup_wizard()
         elif args.command == "configure":
             run_configure()
+        elif args.command == "sync":
+            sync_backup_data(archive_path=args.archive, target_year=args.year, force=args.force)
         elif args.command == "analyze":
-            run_analyze(args.archive, args.year)
+            archive_to_use = args.archive or get_latest_backup_path(FILES_DIR)
+            run_analyze(archive_to_use, args.year)
         elif args.command == "generate":
             run_generate(args.year)
         elif args.command == "preview":
@@ -378,7 +396,8 @@ def main() -> None:
         elif args.command == "render":
             run_render()
         elif args.command == "all":
-            run_analyze(args.archive, args.year)
+            archive_to_use = args.archive or get_latest_backup_path(FILES_DIR)
+            run_analyze(archive_to_use, args.year)
             run_generate(args.year)
             run_render()
     except Exception as exc:

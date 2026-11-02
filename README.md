@@ -8,7 +8,7 @@ A deterministic, frame-accurate web-to-video rendering pipeline and interactive 
 
 ---
 
-## Overview
+## Index
 - [Overview](#overview)
 - [Key Features](#key-features)
 - [The 10 Wrapped Slides](#the-10-wrapped-slides)

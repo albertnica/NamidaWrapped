@@ -33,7 +33,7 @@ if sys.platform == "win32":
 
 @asynccontextmanager
 async def lifespan(app_instance: FastAPI):
-    """Global lifespan context managing loop exception handlers for graceful socket drops."""
+    """Global lifespan context managing loop exception handlers and auto-syncing files/ backup on launch."""
     loop = asyncio.get_running_loop()
     default_handler = loop.get_exception_handler()
 
@@ -49,6 +49,17 @@ async def lifespan(app_instance: FastAPI):
             current_loop.default_exception_handler(context)
 
     loop.set_exception_handler(proactor_exception_handler)
+
+    # Automatically synchronize telemetry with latest backup archive in files/ on launch
+    try:
+        from src.analyzer.sync import sync_backup_data
+        from src.config import CURRENT_YEAR
+        synced, msg = await asyncio.to_thread(sync_backup_data, target_year=CURRENT_YEAR)
+        if synced:
+            print(f"[STUDIO LIFESPAN] {msg}")
+    except Exception as exc:
+        print(f"[STUDIO LIFESPAN WARNING] Backup synchronization on startup skipped: {exc}")
+
     yield
 
 
@@ -180,6 +191,14 @@ async def update_preview_fps(req: PreviewFpsRequest) -> dict[str, Any]:
     """Updates and persists the global preview framerate (1 to 60 FPS)."""
     saved_fps = studio_service.set_preview_fps(req.fps)
     return {"status": "ok", "preview_fps": saved_fps}
+
+
+@app.post("/api/studio/sync-backup")
+async def sync_backup_endpoint(force: bool = False) -> dict[str, Any]:
+    """Triggers telemetry synchronization from the newest backup archive in files/."""
+    from src.analyzer.sync import sync_backup_data
+    synced, msg = await asyncio.to_thread(sync_backup_data, target_year=CURRENT_YEAR, force=force)
+    return {"status": "ok", "synchronized": synced, "message": msg}
 
 
 @app.get("/api/theme", response_model=ThemeModel)

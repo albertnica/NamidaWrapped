@@ -19,18 +19,29 @@ const peakHourIndex = (typeof window !== 'undefined' && window.CLOCK_PEAK_HOUR !
 const raysGroup = document.getElementById('clock-rays');
 if (raysGroup) {
   const cx = 340, cy = 340;
-  const baseR = 138;
-  const maxExt = 110;
+  const baseR = 158;
+  const minRay = 16;
+  const maxExt = 84;
 
   for (let h = 0; h < 24; h++) {
     const angle = (h / 24) * 2 * Math.PI - Math.PI / 2;
     const normVal = hourlyData[h] / maxHour;
-    const targetLen = baseR + normVal * maxExt;
+    const targetLen = baseR + minRay + normVal * maxExt;
 
-    // Peak hours glow with vibrant emerald
+    // Peak hours glow with vibrant emerald, moderate hours in bright mint, non-peak as crisp luminous ticks
     const isPeak = (normVal >= 0.65 || h === peakHourIndex);
-    const strokeColor = isPeak ? '#00ff87' : '#28382b';
-    const strokeW = isPeak ? 13 : 8;
+    let strokeColor;
+    let strokeW;
+    if (isPeak) {
+      strokeColor = '#00ff87';
+      strokeW = 11;
+    } else if (normVal >= 0.28) {
+      strokeColor = 'rgba(61, 220, 132, 0.75)';
+      strokeW = 8;
+    } else {
+      strokeColor = 'rgba(255, 255, 255, 0.32)';
+      strokeW = 6;
+    }
 
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     line.setAttribute('id', 'clock-ray-' + h);
@@ -78,13 +89,13 @@ const microMeterBases = [
 ];
 
 const weekHeights = (typeof window !== 'undefined' && window.CLOCK_WEEK_HEIGHTS) || {
-  'eq-sun': 175,
-  'eq-mon': 125,
-  'eq-tue': 130,
-  'eq-wed': 235,
-  'eq-thu': 165,
-  'eq-fri': 155,
-  'eq-sat': 195
+  'eq-sun': 135,
+  'eq-mon': 100,
+  'eq-tue': 105,
+  'eq-wed': 185,
+  'eq-thu': 130,
+  'eq-fri': 120,
+  'eq-sat': 150
 };
 const peakDayBarId = (typeof window !== 'undefined' && window.CLOCK_PEAK_DAY_ID) || 'eq-wed';
 
@@ -501,7 +512,7 @@ window.seek = function(t) {
         const isPeak = line.dataset.isPeak === '1';
 
         // Living undulation on rays between transitions
-        const rayPulse = (isPeak && exitProg === 0) ? Math.sin(t * 8.5 + h * 0.5) * 6 : 0;
+        const rayPulse = exitProg === 0 ? (isPeak ? Math.sin(t * 8.5 + h * 0.5) * 5 : Math.sin(t * 4.0 + h) * 1.5) : 0;
         const curLen = baseR + (targetLen - baseR) * rayEase + rayPulse;
 
         line.setAttribute('x2', (cx + curLen * Math.cos(angle)).toFixed(1));

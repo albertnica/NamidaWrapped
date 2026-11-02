@@ -583,22 +583,23 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 340px;
-  height: 340px;
+  width: 290px;
+  height: 290px;
   border-radius: 50%;
-  background: radial-gradient(circle, #1a271d 0%, #0d140e 100%);
+  background: radial-gradient(circle at center, #18261b 0%, #0c130d 100%);
   border: 2px solid var(--theme-primary, rgba(0, 255, 135, 0.45));
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 45px var(--theme-primary, rgba(0, 255, 135, 0.30));
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px var(--theme-primary, rgba(0, 255, 135, 0.25));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 10;
   text-align: center;
+  padding: 10px;
 }
 
 .clock-center-time {
-  font-size: 96px;
+  font-size: 82px;
   font-weight: 900;
   line-height: 1;
   letter-spacing: -2px;
@@ -606,53 +607,58 @@ body {
 }
 
 .clock-center-sub {
-  font-size: 38px;
+  font-size: 30px;
   font-weight: 900;
   letter-spacing: 3px;
   color: var(--theme-primary, #00ff87);
-  margin: 8px 0;
+  margin: 6px 0 4px 0;
   text-transform: uppercase;
 }
 
 .clock-center-plays {
-  font-size: 42px;
-  font-weight: 700;
+  font-size: 34px;
+  font-weight: 800;
   color: #ffffff;
 }
 
 .chronotype-bridge-card {
-  height: 110px;
+  min-height: 110px;
   background: rgba(255, 255, 255, 0.06);
   border: 1.5px solid rgba(255, 255, 255, 0.16);
   border-radius: 28px;
-  padding: 0 40px;
+  padding: 18px 36px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   backdrop-filter: blur(30px);
   flex-shrink: 0;
+  gap: 20px;
 }
 
 .chrono-tag {
-  font-size: 36px;
+  font-size: 34px;
   font-weight: 900;
   letter-spacing: 2px;
   color: var(--theme-primary, #00ff87);
   text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .chrono-detail {
-  font-size: 32px;
+  font-size: 34px;
   font-weight: 700;
   color: #ffffff;
+  text-align: right;
+  line-height: 1.25;
 }
 
 .week-equalizer-card {
-  height: 360px;
+  height: 410px;
   background: rgba(255, 255, 255, 0.06);
   border: 1.5px solid rgba(255, 255, 255, 0.16);
   border-radius: 40px;
-  padding: 30px 38px;
+  padding: 28px 38px 24px 38px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -664,6 +670,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  z-index: 5;
 }
 
 .week-eq-title {
@@ -683,14 +691,14 @@ body {
   font-size: 34px;
   font-weight: 900;
   letter-spacing: 1px;
+  white-space: nowrap;
 }
 
 .week-eq-bars {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  height: 240px;
-  padding-bottom: 8px;
+  height: 250px;
 }
 
 .eq-day-col {
@@ -702,7 +710,7 @@ body {
 }
 
 .eq-bar-wrap {
-  height: 250px;
+  height: 190px;
   display: flex;
   align-items: flex-end;
   position: relative;
@@ -716,6 +724,7 @@ body {
 
 .eq-bar.peak {
   background: linear-gradient(to top, #0f632c 0%, var(--theme-primary, #00ff87) 100%);
+  box-shadow: 0 0 25px rgba(0, 255, 135, 0.4);
 }
 
 .eq-day-name {
@@ -1039,6 +1048,23 @@ body {
   color: #ff3399;
   text-transform: uppercase;
   margin-bottom: 12px;
+}
+
+.hero-artist-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  border-radius: 999px;
+  border: 1.5px solid #a855f7;
+  background: rgba(121, 40, 202, 0.28);
+  color: #e9d5ff;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
 }
 
 /* ========================================================

@@ -295,16 +295,23 @@ def step_4_bootstrap_directories() -> bool:
         else:
             print(f"  [OK] Directory exists: {d.relative_to(PROJECT_ROOT)}")
 
-    # Check for user input files
-    db_file = PROJECT_ROOT / "files" / "namida.db"
-    csv_file = PROJECT_ROOT / "files" / "namida_history.csv"
-    if db_file.exists() or csv_file.exists():
+    # Check for user input files (Namida backup ZIP is the primary format)
+    files_dir = PROJECT_ROOT / "files"
+    zip_files = sorted(
+        [p for p in files_dir.glob("*.zip") if p.is_file()],
+        key=lambda p: p.stat().st_mtime,
+        reverse=True,
+    )
+    db_file = files_dir / "namida.db"
+    csv_file = files_dir / "namida_history.csv"
+    if zip_files:
+        print(f"  [OK] Detected user Namida backup archive: files/{zip_files[0].name}")
+    elif db_file.exists() or csv_file.exists():
         found = db_file.name if db_file.exists() else csv_file.name
         print(f"  [OK] Detected user music telemetry database: files/{found}")
     else:
-        print("  [INFO] No Namida database detected yet in files/")
-        print("         Place your exported 'namida.db' or 'namida_history.csv' into 'files/'")
-        print("         or upload it directly in the Web Studio.")
+        print("  [INFO] No Namida backup archive detected yet in files/")
+        print("         Place your exported 'Namida Backup - YYYY-MM-DD.zip' into 'files/'")
 
     return True
 

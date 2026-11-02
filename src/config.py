@@ -24,7 +24,28 @@ ROOT_DIR: Path = Path(__file__).resolve().parent.parent
 
 # Input Archives & Assets
 FILES_DIR: Path = ROOT_DIR / "files"
-DEFAULT_BACKUP_PATH: Path = FILES_DIR / "Namida Backup - 2026-10-03 17.42.39.zip"
+
+
+def get_latest_backup_path(files_dir: Path = FILES_DIR) -> Path:
+    """Discovers the most recent Namida backup ZIP archive inside the files/ directory.
+
+    Why: Namida produces timestamped ZIP files upon backup (e.g. 'Namida Backup - 2026-11-01 21.58.08.zip').
+    Instead of hardcoding a stale filename, dynamically resolves the newest archive by mtime.
+    """
+    if not files_dir.exists():
+        files_dir.mkdir(parents=True, exist_ok=True)
+
+    archives = sorted(
+        [p for p in files_dir.glob("*.zip") if p.is_file()],
+        key=lambda p: p.stat().st_mtime,
+        reverse=True,
+    )
+    if archives:
+        return archives[0]
+    return files_dir / "Namida Backup.zip"
+
+
+DEFAULT_BACKUP_PATH: Path = get_latest_backup_path(FILES_DIR)
 
 # Output Root & Organized Subdirectories
 OUTPUT_DIR: Path = ROOT_DIR / "output"
