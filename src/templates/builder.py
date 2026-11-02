@@ -347,17 +347,41 @@ class StoryboardBuilder:
         disc4 = get_disc(3, "BLXCKBUSTA", s3["artwork"])
         disc5 = get_disc(4, "Zeds Dead", s5["artwork"])
 
-        # Curated Top Genres & Anthems
+        # Curated Top Genres
         top_genres_list = curation.get("top_genres", [])
-        def get_genre(idx: int, def_g: str, def_s: str) -> dict[str, str]:
+        def get_genre(idx: int, def_g: str, def_s: str, def_art: str = "", def_artist: str = "") -> dict[str, str]:
             item = top_genres_list[idx] if len(top_genres_list) > idx else {}
-            return {"genre": item.get("genre") or def_g, "song": item.get("song") or def_s}
+            genre = item.get("genre") or def_g
+            song = item.get("song") or def_s
+            artist = item.get("artist") or ""
+            artwork = item.get("artwork") or ""
+            flac_path = item.get("path")
 
-        g1 = get_genre(0, "Phonk", "WITCHCRAFT")
-        g2 = get_genre(1, "Melodic Bass", "I'll Come Runnin")
-        g3 = get_genre(2, "Trap Metal", "sorry im a haunted house")
-        g4 = get_genre(3, "Drift Phonk", "FULL SEND RMX")
-        g5 = get_genre(4, "Future Bass", "Nightlight")
+            if flac_path and (not artist or not artwork or artwork.startswith("data:image/svg")):
+                meta = CuratorWizard.extract_flac_metadata(flac_path)
+                if meta.get("valid"):
+                    if not artist and meta.get("artist"):
+                        artist = meta["artist"]
+                    if (not artwork or artwork.startswith("data:image/svg")) and meta.get("artwork"):
+                        artwork = meta["artwork"]
+
+            if not artist:
+                artist = def_artist or "Various Artists"
+            if not artwork or artwork.startswith("data:image/svg"):
+                artwork = def_art or self.resolve_artist_avatar(artist or genre, fallback_thumb)
+
+            return {
+                "genre": genre,
+                "song": song,
+                "artist": artist,
+                "artwork": artwork
+            }
+
+        g1 = get_genre(0, "Alternative", "my BAD!", s1["artwork"], "lamont4u")
+        g2 = get_genre(1, "Melodic Bass", "Take Me Back", s2["artwork"], "ILLENIUM, Dean Lewis")
+        g3 = get_genre(2, "Rap/Hip Hop", "THE TRUTH", s3["artwork"], "GOTOU寄生獣, vodvor")
+        g4 = get_genre(3, "Dance", "Refuge", s4["artwork"], "ILLENIUM, Norma Jean Martine")
+        g5 = get_genre(4, "Chill EDM", "Let Me Fall", s5["artwork"], "Said The Sky, baby blue")
 
         # Slide 9: 9. Most Listened Songs (Automated Namida Telemetry - Read-Only)
         raw_top_tracks = stats_data.get("top_tracks", [])
@@ -965,7 +989,7 @@ class StoryboardBuilder:
       </div>
     </div>
 
-    <!-- SLIDE 8: TOP GENRES & REPRESENTATIVE ANTHEMS -->
+    <!-- SLIDE 8: TOP GENRES (CURATED) -->
     <div class="slide" id="slide-7">
       <div class="title-group anim-title" id="s7-title">
         <div class="eyebrow">Sound DNA</div>
@@ -973,54 +997,56 @@ class StoryboardBuilder:
       </div>
 
       <div class="slide-8-body">
-        <div class="donut-section anim-hero" id="s7-donut">
-          <div class="donut-container">
-            <svg class="donut-svg" id="donut-svg-ring" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="38" fill="none" stroke="#1d261e" stroke-width="12" />
-              <circle cx="50" cy="50" r="38" fill="none" stroke="#00ff87" stroke-width="12" 
-                      stroke-dasharray="27.4 211.3" stroke-dashoffset="0" id="donut-seg-0" />
-              <circle cx="50" cy="50" r="38" fill="none" stroke="#1ed760" stroke-width="12" 
-                      stroke-dasharray="22.9 215.8" stroke-dashoffset="-27.4" id="donut-seg-1" />
-              <circle cx="50" cy="50" r="38" fill="none" stroke="#7928ca" stroke-width="12" 
-                      stroke-dasharray="22.0 216.7" stroke-dashoffset="-50.3" id="donut-seg-2" />
-              <circle cx="50" cy="50" r="38" fill="none" stroke="#ff007a" stroke-width="12" 
-                      stroke-dasharray="17.4 221.3" stroke-dashoffset="-72.3" id="donut-seg-3" />
-              <circle cx="50" cy="50" r="38" fill="none" stroke="#ff8a00" stroke-width="12" 
-                      stroke-dasharray="17.2 221.5" stroke-dashoffset="-89.7" id="donut-seg-4" />
-            </svg>
-            <div class="donut-center-card" id="donut-center-box">
-              <div class="donut-top-tag">TOP GENRE</div>
-              <div class="donut-hero-genre">{g1['genre'].upper()}</div>
-              <div class="donut-top-tag" style="color:#cad8cc;font-size:18px;margin-top:4px;">Signature Style</div>
+        <div class="hero-genre-card anim-hero" id="genre-hero">
+          <img class="hero-genre-cover" src="{g1['artwork']}" alt="{g1['genre']}">
+          <div class="hero-genre-info">
+            <div class="hero-genre-pill">#1 TOP GENRE OF {year_str}</div>
+            <div class="hero-genre-name">{g1['genre']}</div>
+            <div class="hero-genre-song">{g1['song']}</div>
+            <div class="hero-genre-artist">{g1['artist']}</div>
+          </div>
+        </div>
+
+        <div class="sub-tracks-list anim-sub" id="s7-subgenres">
+          <div class="sub-track-card sub-genre-card" id="genre-card-1">
+            <div class="sub-track-rank">2</div>
+            <img class="sub-genre-cover" src="{g2['artwork']}" alt="{g2['genre']}">
+            <div class="sub-genre-meta">
+              <div class="sub-genre-name">{g2['genre']}</div>
+              <div class="sub-genre-song">{g2['song']}</div>
+              <div class="sub-genre-artist">{g2['artist']}</div>
             </div>
           </div>
-        </div>
 
-        <div class="genre-grid-cards anim-sub" id="s7-genres">
-          <div class="genre-anthem-card" id="g-anthem-0">
-            <div class="genre-anthem-name">1. {g1['genre']}</div>
-            <div class="genre-anthem-track">Anthem: {g1['song']}</div>
+          <div class="sub-track-card sub-genre-card" id="genre-card-2">
+            <div class="sub-track-rank">3</div>
+            <img class="sub-genre-cover" src="{g3['artwork']}" alt="{g3['genre']}">
+            <div class="sub-genre-meta">
+              <div class="sub-genre-name">{g3['genre']}</div>
+              <div class="sub-genre-song">{g3['song']}</div>
+              <div class="sub-genre-artist">{g3['artist']}</div>
+            </div>
           </div>
-          <div class="genre-anthem-card" id="g-anthem-1">
-            <div class="genre-anthem-name">2. {g2['genre']}</div>
-            <div class="genre-anthem-track">Anthem: {g2['song']}</div>
-          </div>
-          <div class="genre-anthem-card" id="g-anthem-2">
-            <div class="genre-anthem-name">3. {g3['genre']}</div>
-            <div class="genre-anthem-track">Anthem: {g3['song']}</div>
-          </div>
-          <div class="genre-anthem-card" id="g-anthem-3">
-            <div class="genre-anthem-name">4. {g4['genre']}</div>
-            <div class="genre-anthem-track">Anthem: {g4['song']}</div>
-          </div>
-          <div class="genre-anthem-card" id="g-anthem-4">
-            <div class="genre-anthem-name">5. {g5['genre']}</div>
-            <div class="genre-anthem-track">Anthem: {g5['song']}</div>
-          </div>
-        </div>
 
-        <div class="genre-footer-ribbon anim-foot" id="s7-foot">
-          Curated musical universe of {year_str}.
+          <div class="sub-track-card sub-genre-card" id="genre-card-3">
+            <div class="sub-track-rank">4</div>
+            <img class="sub-genre-cover" src="{g4['artwork']}" alt="{g4['genre']}">
+            <div class="sub-genre-meta">
+              <div class="sub-genre-name">{g4['genre']}</div>
+              <div class="sub-genre-song">{g4['song']}</div>
+              <div class="sub-genre-artist">{g4['artist']}</div>
+            </div>
+          </div>
+
+          <div class="sub-track-card sub-genre-card" id="genre-card-4">
+            <div class="sub-track-rank">5</div>
+            <img class="sub-genre-cover" src="{g5['artwork']}" alt="{g5['genre']}">
+            <div class="sub-genre-meta">
+              <div class="sub-genre-name">{g5['genre']}</div>
+              <div class="sub-genre-song">{g5['song']}</div>
+              <div class="sub-genre-artist">{g5['artist']}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

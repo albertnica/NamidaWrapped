@@ -91,7 +91,7 @@ Each slide runs for **5.0 seconds** (0.65s staggered entrance, 3.80s living dyna
 | **5** | **Top Albums** | Spinning purple vinyl disc + curated 1..5 album grid | Top 5 albums, artist names, and album artwork |
 | **6** | **Top Artists** | Pulsating avatar glow + ranking cards | Top 5 curated artists with portraits resolved from Namida archives |
 | **7** | **Top Discoveries** | Magenta neon halo & new artist discovery cards | 5 breakthrough artists discovered during the year |
-| **8** | **Top Genres** | SVG Donut chart rollout & 5 genre anthem cards | Top 5 genres paired with representative signature anthems |
+| **8** | **Top Genres** | Hero #1 spotlight card + 4 sub-genre cards with cover art & artists | Top 5 curated genres paired with representative tracks, artists, and FLAC covers |
 | **9** | **Most Listened Songs** | Spotlight card with vinyl record + telemetry pills | Top 5 streamed songs from raw Namida logs with exact play counts and minutes |
 | **10** | **Most Listened Artists** | Avatar spotlight + streaming metric pills | Top 5 streamed artists from raw Namida logs with exact play counts and minutes |
 
@@ -172,8 +172,8 @@ Each slide runs for **5.0 seconds** (0.65s staggered entrance, 3.80s living dyna
   <img src="img/story_slide8.png" width="380" alt="Slide 8 - Top Genres" />
 </p>
 
-- **Motion & Layout**: Multi-colored SVG concentric donut chart with percentage breakdown, genre share cards, and representative anthem ribbon.
-- **Data Displayed**: Top 5 Music Genres paired with signature anthem tracks.
+- **Motion & Layout**: Hero spotlight card for #1 Top Genre with high-res cover art and glassmorphic breathing pulse, paired with 4 staggered sub-genre cards displaying cover art, track titles, and artist credits.
+- **Data Displayed**: Top 5 Music Genres paired with representative tracks, artist names, and album cover art.
 
 ---
 
@@ -389,7 +389,7 @@ The studio will automatically open in your default browser at **`http://127.0.0.
 - **Panel 5 (Top Albums)**: Enter local `.flac` paths or album names to resolve covers.
 - **Panel 6 (Top Artists)**: Enter your favorite creators (defaults to `ILLENIUM` for #1). Portraits are matched from the Namida archive.
 - **Panel 7 (Top Discoveries)**: Enter artists discovered during 2026.
-- **Panel 8 (Top Genres)**: Curate your top 5 genres and representative anthem songs.
+- **Panel 8 (Top Genres)**: Curate your top 5 genres, representative tracks, and artists.
 - **Panels 9 & 10 (Namida Most Listened)**: Review automated telemetry rankings for songs and artists.
 
 Each change instantly updates the live preview on the right.

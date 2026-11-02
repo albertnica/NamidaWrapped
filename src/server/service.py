@@ -161,7 +161,7 @@ class StudioService:
                 curation["top_discoveries"] = data["top_discoveries"]
 
         elif panel_id == 7:
-            # Top Genres (list of 5 genres + anthems with optional local paths)
+            # Top Genres (list of 5 genres + representative songs with optional local paths)
             if "top_genres" in data and isinstance(data["top_genres"], list):
                 curation["top_genres"] = data["top_genres"]
 

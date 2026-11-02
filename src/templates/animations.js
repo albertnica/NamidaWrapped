@@ -71,15 +71,6 @@ if (eqStream) {
   }
 }
 
-// Donut segment geometry constants (Circumference = 2 * PI * 38 = 238.76)
-const donutSegments = [
-  { id: 'donut-seg-0', len: 27.4, offset: 0.0 },
-  { id: 'donut-seg-1', len: 22.9, offset: -27.4 },
-  { id: 'donut-seg-2', len: 22.0, offset: -50.3 },
-  { id: 'donut-seg-3', len: 17.4, offset: -72.3 },
-  { id: 'donut-seg-4', len: 17.2, offset: -89.7 }
-];
-
 // Micro-meter base heights for Slide 0 bento cards (20 bars)
 const microMeterBases = [
   40, 65, 100, 80, 55,
@@ -649,40 +640,27 @@ window.seek = function(t) {
   }
 
   // ==========================================
-  // SLIDE 7: Top Genres (Donut Wipe & Anthem Cards)
+  // SLIDE 7: Top Genres (Hero Breath & Staggered Cards)
   // ==========================================
   if (activeIndex === 7) {
-    const donutRing = document.getElementById('donut-svg-ring');
-    if (donutRing) {
-      const donutBreath = (1 + 0.015 * Math.sin(t * 2.2)).toFixed(3);
-      const donutWobble = (Math.sin(t * 1.5) * 4).toFixed(1);
-      donutRing.style.transform = `scale(${donutBreath}) rotate(${donutWobble}deg)`;
+    const genreHero = document.getElementById('genre-hero');
+    if (genreHero && exitProg === 0) {
+      const breath = (1 + 0.012 * Math.sin(t * 3.0)).toFixed(3);
+      genreHero.style.transform = `scale(${breath})`;
     }
 
-    const donutWipeProg = clamp(timeInSlide / 0.85);
-    const donutWipeEase = easeOutCubic(donutWipeProg);
-
-    donutSegments.forEach(seg => {
-      const circleEl = document.getElementById(seg.id);
-      if (circleEl) {
-        const activeLen = (seg.len * donutWipeEase).toFixed(1);
-        const remain = (238.76 - activeLen).toFixed(1);
-        circleEl.setAttribute('stroke-dasharray', `${activeLen} ${remain}`);
-      }
-    });
-
-    for (let gIdx = 0; gIdx < 5; gIdx++) {
-      const card = document.getElementById('g-anthem-' + gIdx);
+    for (let gIdx = 1; gIdx <= 4; gIdx++) {
+      const card = document.getElementById('genre-card-' + gIdx);
       if (card) {
-        const gDelay = 0.14 + gIdx * 0.07;
+        const gDelay = 0.12 + gIdx * 0.07;
         const gProg = clamp((timeInSlide - gDelay) / 0.45);
         const gEase = easeOutCubic(gProg);
 
-        const gExitProg = clamp((exitProg - gIdx * 0.05) / 0.75);
+        const gExitProg = clamp((exitProg - (4 - gIdx) * 0.06) / 0.75);
         const gExitEase = easeInCubic(gExitProg);
 
         card.style.opacity = (gEase * (1 - gExitEase)).toFixed(3);
-        card.style.transform = `translateX(${((1 - gEase) * 30 + gExitEase * 35).toFixed(1)}px)`;
+        card.style.transform = `translateX(${((1 - gEase) * 35 + gExitEase * 40).toFixed(1)}px)`;
       }
     }
   }

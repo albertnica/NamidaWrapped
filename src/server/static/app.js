@@ -740,8 +740,8 @@ function renderPanelForm(panelId) {
   } else if (panelId === 7) {
     const genres = cur.top_genres || [];
     container.innerHTML = `
-      <div class="form-section-title">8. Top Genres & Representative Anthems</div>
-      <div class="form-section-desc">Enter genre names or local anthem audio paths. Tags & artwork are extracted automatically.</div>
+      <div class="form-section-title">8. Top Genres</div>
+      <div class="form-section-desc">Enter your top 5 genres, representative tracks, and artists or local audio paths. Tags & artwork are extracted automatically.</div>
       <div id="genres-list-container">
         ${[0, 1, 2, 3, 4].map(i => renderGenreItemInput(i + 1, genres[i] || {})).join('')}
       </div>
@@ -1432,23 +1432,26 @@ function renderSimpleCreatorInput(type, rank, data) {
 function renderGenreItemInput(rank, data) {
   const g = data.genre || '';
   const s = data.song || '';
+  const a = data.artist || '';
   const p = data.path || '';
   const thumb = data.artwork || DEFAULT_THUMB_SVG;
   return `
     <div class="curated-card-input" id="genre-card-${rank}" style="align-items:flex-start;padding:12px 14px;margin-bottom:8px;">
       <div class="curated-rank" style="margin-top:6px;">${rank}</div>
-      <img class="curated-thumb" id="genre-thumb-${rank}" src="${thumb}" alt="Anthem Art" style="margin-top:4px;">
+      <img class="curated-thumb" id="genre-thumb-${rank}" src="${thumb}" alt="Genre Art" style="margin-top:4px;">
       <div class="curated-fields" style="flex:1;">
         <div style="display:flex;gap:8px;margin-bottom:6px;">
           <input type="text" class="curated-mini-input" style="flex:1;" id="genre-name-${rank}" 
-                 value="${g}" placeholder="Genre (e.g. Phonk, Melodic Bass)">
+                 value="${g}" placeholder="Genre (e.g. Alternative, Melodic Bass)">
           <input type="text" class="curated-mini-input" style="flex:1;" id="genre-song-${rank}" 
-                 value="${s}" placeholder="Anthem Track (e.g. WITCHCRAFT)">
+                 value="${s}" placeholder="Track (e.g. my BAD!)">
+          <input type="text" class="curated-mini-input" style="flex:1;" id="genre-artist-${rank}" 
+                 value="${a}" placeholder="Artist (e.g. lamont4u)">
         </div>
         <div class="path-input-row">
           <input type="text" class="curated-mini-input flac-path-input" 
                  data-type="genre" data-rank="${rank}" 
-                 value="${p}" placeholder="Anthem Local Audio Path (FLAC, MP3, M4A)...">
+                 value="${p}" placeholder="Local Audio Path (FLAC, MP3, M4A)...">
           <button type="button" class="btn-browse-inline" 
                   onclick="browseCuratedAudioPath('genre', ${rank})"
                   title="Browse audio file with Windows File Explorer">
@@ -1483,8 +1486,8 @@ function bindFLACAutoloaders(type) {
             document.getElementById(`album-artist-${rank}`).value = meta.artist;
           } else if (type === 'genre') {
             document.getElementById(`genre-song-${rank}`).value = meta.title;
-            if (meta.artist && !document.getElementById(`genre-name-${rank}`).value) {
-              document.getElementById(`genre-name-${rank}`).value = meta.artist;
+            if (meta.artist) {
+              document.getElementById(`genre-artist-${rank}`).value = meta.artist;
             }
           }
           if (meta.artwork) {
@@ -1792,7 +1795,8 @@ function collectCurrentPanelData(pid) {
       genres.push({
         rank: i,
         genre: document.getElementById(`genre-name-${i}`)?.value || `Genre ${i}`,
-        song: document.getElementById(`genre-song-${i}`)?.value || `Anthem ${i}`,
+        song: document.getElementById(`genre-song-${i}`)?.value || `Track ${i}`,
+        artist: document.getElementById(`genre-artist-${i}`)?.value || '',
         path: document.querySelector(`.flac-path-input[data-type="genre"][data-rank="${i}"]`)?.value || '',
         artwork: document.getElementById(`genre-thumb-${i}`)?.src || ''
       });

@@ -57,11 +57,12 @@ class CuratedDiscoveryModel(BaseModel):
 
 
 class CuratedGenreModel(BaseModel):
-    """Single curated genre item with representative anthem and optional local audio path."""
+    """Single curated genre item with representative song, artist, and optional local audio path."""
     rank: int = Field(ge=1, le=5)
     genre: str = Field(min_length=1)
     song: str = Field(min_length=1)
-    path: Optional[str] = Field(default=None, description="Local audio file path for anthem")
+    artist: Optional[str] = Field(default="", description="Artist name")
+    path: Optional[str] = Field(default=None, description="Local audio file path")
     artwork: Optional[str] = Field(default="", description="Cover art data URI")
 
 
